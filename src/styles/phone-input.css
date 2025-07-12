@@ -1,0 +1,58 @@
+/* Phone Input Custom Styles */
+.phone-input-custom {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.phone-input-custom .PhoneInputInput {
+  background-color: rgb(51 65 85) !important;
+  border: 1px solid rgb(71 85 105) !important;
+  border-radius: 0.5rem !important;
+  color: white !important;
+  font-size: 1rem !important;
+  padding: 0.75rem 1rem !important;
+  width: 100% !important;
+  outline: none !important;
+  transition: border-color 0.2s !important;
+}
+
+.phone-input-custom .PhoneInputInput:focus {
+  border-color: rgb(148 163 184) !important;
+}
+
+.phone-input-custom .PhoneInputInput::placeholder {
+  color: rgb(148 163 184) !important;
+}
+
+.phone-input-custom .PhoneInputCountrySelect {
+  background-color: rgb(51 65 85) !important;
+  border: 1px solid rgb(71 85 105) !important;
+  border-radius: 0.5rem !important;
+  color: white !important;
+  padding: 0.75rem 0.5rem !important;
+  outline: none !important;
+  transition: border-color 0.2s !important;
+  min-width: 4rem !important;
+}
+
+.phone-input-custom .PhoneInputCountrySelect:focus {
+  border-color: rgb(148 163 184) !important;
+}
+
+.phone-input-custom .PhoneInputCountrySelectArrow {
+  color: white !important;
+}
+
+.phone-input-custom .PhoneInputCountryIcon {
+  width: 1.2em !important;
+  height: 1.2em !important;
+  border-radius: 0.25rem !important;
+}
+
+/* Ensure the dropdown options are visible */
+.phone-input-custom .PhoneInputCountrySelect option {
+  background-color: rgb(51 65 85) !important;
+  color: white !important;
+} 

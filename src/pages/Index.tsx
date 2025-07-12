@@ -1,34 +1,79 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { PhoneInput } from "@/components/ui/phone-input";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [currentTestimonialSet, setCurrentTestimonialSet] = useState(0); // 0 for testimonials 1&2, 1 for testimonials 3&4
+  const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
+  const [selectedVenue, setSelectedVenue] = useState<string>("");
+  const [customVenueName, setCustomVenueName] = useState<string>("");
+  const [currentVenueIndex, setCurrentVenueIndex] = useState(0);
+
+  // Venue data for carousel
+  const venues = [
+    { name: "Corazon", image: "/ChatGPT Image Jul 12, 2025, 10_17_29 PM.png" },
+    { name: "Acre", image: "/ChatGPT Image Jul 12, 2025, 10_19_38 PM.png" },
+    { name: "Viceroy", image: "/ChatGPT Image Jul 12, 2025, 10_20_03 PM.png" },
+    { name: "Baja Luna", image: "/ChatGPT Image Jul 12, 2025, 10_41_25 PM.png" },
+    { name: "Más Olas", image: "/ChatGPT Image Jul 12, 2025, 10_20_59 PM.png" },
+  ];
+
+  // Auto-advance venue carousel - smooth continuous rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentVenueIndex((prev) => prev + 1);
+    }, 50); // Very frequent updates for smooth animation
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const scrollToContact = () => {
+    const contactSection = document.getElementById('contact-form');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToProcess = () => {
+    const processSection = document.getElementById('process-section');
+    if (processSection) {
+      processSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const scrollToWork = () => {
+    const workSection = document.getElementById('work-section');
+    if (workSection) {
+      workSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Header with three buttons */}
-      <header className="w-full py-6">
+      <header className="w-full py-6 px-6">
         <div className="flex justify-center gap-8">
-          <Button variant="outline" className="px-6 py-2 font-light">
-            Button 1
+          <Button variant="outline" className="px-6 py-2 font-light hidden md:block" onClick={scrollToProcess}>
+            OUR PROCESS
           </Button>
-          <Button variant="outline" className="px-6 py-2 font-light">
-            Button 2
+          <Button className="px-6 py-2 font-bold bg-foreground text-background hover:bg-foreground/90 shadow-md hover:shadow-lg transition-all duration-200" onClick={scrollToContact}>
+            BOOK
           </Button>
-          <Button variant="outline" className="px-6 py-2 font-light">
-            Button 3
+          <Button variant="outline" className="px-6 py-2 font-light hidden md:block" onClick={scrollToWork}>
+            OUR WORK
           </Button>
         </div>
       </header>
 
       {/* Main hero section */}
-      <main className="flex flex-col items-center justify-center px-4 py-12">
+      <main className="flex flex-col items-center justify-center px-6 py-12">
         {/* Central rectangle div - responsive size with aspect ratio */}
         <div 
-          className="w-[75vw] max-w-6xl rounded-3xl mb-8 aspect-[16/9] max-h-[60vh] bg-cover bg-center bg-no-repeat shadow-lg"
+          className="w-[75vw] max-w-6xl rounded-3xl mb-8 aspect-[16/9] max-h-[60vh] bg-cover bg-center bg-no-repeat shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
           style={{
             backgroundImage: "url('/UCW placeholder hero image .jpg')"
           }}
+          onClick={scrollToContact}
         >
         </div>
 
@@ -40,10 +85,7 @@ const Index = () => {
           <Button 
             size="lg" 
             className="text-lg px-8 py-6 rounded-full font-light"
-            onClick={() => {
-              // Add your contact action here
-              console.log("Contact CTA clicked");
-            }}
+            onClick={scrollToContact}
           >
             Contact a Local Wedding Pioneer
           </Button>
@@ -51,103 +93,161 @@ const Index = () => {
       </main>
 
       {/* Social Proof Section - Venue Logos */}
-      <section className="pt-20 pb-12 px-4">
+      <section className="pt-20 pb-12 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <p className="text-lg font-light text-muted-foreground">
               Trusted by Cabo's Premier Wedding Venues
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
-            {/* Corazon */}
-            <div className="flex flex-col items-center">
-              <div className="w-24 h-16 flex items-center justify-center mb-2">
-                <img 
-                  src="/ChatGPT Image Jul 12, 2025, 10_17_29 PM.png" 
-                  alt="Corazon" 
-                  className="max-w-full max-h-full object-contain"
-                />
+          
+          {/* Desktop Grid */}
+          <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
+            {venues.map((venue, index) => (
+              <div key={venue.name} className="flex flex-col items-center">
+                <div className="w-24 h-16 flex items-center justify-center mb-2">
+                  <img 
+                    src={venue.image} 
+                    alt={venue.name} 
+                    className="max-w-full max-h-full object-contain"
+                  />
+                </div>
+                <span className="text-xs font-light text-muted-foreground">{venue.name}</span>
               </div>
-              <span className="text-xs font-light text-muted-foreground">Corazon</span>
-            </div>
-            {/* Acre */}
-            <div className="flex flex-col items-center">
-              <div className="w-28 h-20 flex items-center justify-center mb-2">
-                <img 
-                  src="/ChatGPT Image Jul 12, 2025, 10_19_38 PM.png" 
-                  alt="Acre" 
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-              <span className="text-xs font-light text-muted-foreground">Acre</span>
-            </div>
-            {/* Viceroy */}
-            <div className="flex flex-col items-center">
-              <div className="w-28 h-20 flex items-center justify-center mb-2">
-                <img 
-                  src="/ChatGPT Image Jul 12, 2025, 10_20_03 PM.png" 
-                  alt="Viceroy" 
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-              <span className="text-xs font-light text-muted-foreground">Viceroy</span>
-            </div>
-            {/* Baja Luna */}
-            <div className="flex flex-col items-center">
-              <div className="w-24 h-16 flex items-center justify-center mb-2">
-                <img 
-                  src="/ChatGPT Image Jul 12, 2025, 10_41_25 PM.png" 
-                  alt="Baja Luna" 
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-              <span className="text-xs font-light text-muted-foreground">Baja Luna</span>
-            </div>
-            {/* Mas Olas */}
-            <div className="flex flex-col items-center">
-              <div className="w-24 h-16 flex items-center justify-center mb-2">
-                <img 
-                  src="/ChatGPT Image Jul 12, 2025, 10_20_59 PM.png" 
-                  alt="Mas Olas" 
-                  className="max-w-full max-h-full object-contain"
-                />
-              </div>
-              <span className="text-xs font-light text-muted-foreground">Mas Olas</span>
-            </div>
+            ))}
             {/* CTA Button */}
             <div className="flex flex-col items-center">
               <Button 
                 variant="outline" 
                 className="w-24 h-16 text-xs font-semibold flex items-center justify-center mb-2 border-2 border-foreground hover:bg-foreground hover:text-background transition-colors"
-                onClick={() => {
-                  console.log("Reach Out clicked");
-                }}
+                onClick={scrollToContact}
               >
                 Reach Out
               </Button>
             </div>
+          </div>
+
+          {/* Mobile Carousel */}
+          <div className="md:hidden">
+            <div className="relative overflow-hidden">
+              <div 
+                className="flex"
+                style={{ 
+                  transform: `translateX(-${(currentVenueIndex * 0.5) % (venues.length * 33.333)}%)`,
+                  transition: 'none'
+                }}
+              >
+                {/* Multiple sets for seamless infinite scroll */}
+                {[...venues, ...venues, ...venues, ...venues].map((venue, index) => (
+                  <div key={`${venue.name}-${index}`} className="flex-shrink-0 w-1/3 flex flex-col items-center px-4">
+                    <div className="w-20 h-14 flex items-center justify-center mb-2">
+                      <img 
+                        src={venue.image} 
+                        alt={venue.name} 
+                        className="max-w-full max-h-full object-contain"
+                      />
                     </div>
+                    <span className="text-xs font-light text-muted-foreground text-center">{venue.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            
+            {/* Mobile CTA Button */}
+            <div className="flex justify-center mt-8">
+              <Button 
+                variant="outline" 
+                className="px-6 py-3 text-sm font-semibold border-2 border-foreground hover:bg-foreground hover:text-background transition-colors"
+                onClick={scrollToContact}
+              >
+                Reach Out
+              </Button>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* Client Timeline Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
+      <section id="process-section" className="py-20 px-6 bg-gradient-to-b from-background to-muted/20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-normal mb-4 text-foreground tracking-wide">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal mb-4 text-foreground tracking-wide">
               WHAT'S NEXT?
             </h2>
             <div className="w-24 h-1 bg-foreground/20 mx-auto"></div>
           </div>
           
-          <div className="relative">
+          {/* Mobile Layout */}
+          <div className="md:hidden relative">
             {/* Connecting line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-foreground/20 via-foreground/40 to-foreground/20 hidden md:block"></div>
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-foreground/20 via-foreground/40 to-foreground/20"></div>
             
-            <div className="space-y-16 md:space-y-20">
+            <div className="space-y-8">
               {/* Step 1 */}
-              <div className="flex flex-col md:flex-row items-center gap-8 relative">
-                <div className="md:w-1/2 text-center md:text-right md:pr-12">
+              <div className="flex items-center gap-4 relative">
+                <div className="w-1/2 text-right pr-3">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-muted/30 text-center">
+                    <h3 className="text-lg font-normal text-foreground mb-2">
+                      Share Your Vision
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                      (However Abstract)
+                    </p>
+                  </div>
+                </div>
+                <div className="flex-shrink-0 w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-lg shadow-lg z-10 border-3 border-background">
+                  1
+                </div>
+                <div className="w-1/2 pl-3"></div>
+              </div>
+              
+              {/* Step 2 */}
+              <div className="flex items-center gap-4 relative">
+                <div className="w-1/2 pr-3"></div>
+                <div className="flex-shrink-0 w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-lg shadow-lg z-10 border-3 border-background">
+                  2
+                </div>
+                <div className="w-1/2 text-left pl-3">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-muted/30 text-center">
+                    <h3 className="text-lg font-normal text-foreground mb-2">
+                      We Bring it to Life
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                      Professional planning and execution
+                    </p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Step 3 */}
+              <div className="flex items-center gap-4 relative">
+                <div className="w-1/2 text-right pr-3">
+                  <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-muted/30 text-center">
+                    <h3 className="text-lg font-normal text-foreground mb-2">
+                      Celebrate Your Day
+                    </h3>
+                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
+                      Stress free and present
+                    </p>
+                  </div>
+                </div>
+                <div className="flex-shrink-0 w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-lg shadow-lg z-10 border-3 border-background">
+                  3
+                </div>
+                <div className="w-1/2 pl-3"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Layout */}
+          <div className="hidden md:block relative">
+            {/* Connecting line */}
+            <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-foreground/20 via-foreground/40 to-foreground/20"></div>
+            
+            <div className="space-y-20">
+              {/* Step 1 */}
+              <div className="flex flex-row items-center gap-8 relative">
+                <div className="w-1/2 text-right pr-12">
                   <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-muted/30 text-center">
                     <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">
                       Share Your Vision
@@ -160,16 +260,16 @@ const Index = () => {
                 <div className="flex-shrink-0 w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-xl shadow-lg z-10 border-4 border-background">
                   1
                 </div>
-                <div className="md:w-1/2 md:pl-12"></div>
+                <div className="w-1/2 pl-12"></div>
               </div>
               
               {/* Step 2 */}
-              <div className="flex flex-col md:flex-row items-center gap-8 relative">
-                <div className="md:w-1/2 md:pr-12"></div>
+              <div className="flex flex-row items-center gap-8 relative">
+                <div className="w-1/2 pr-12"></div>
                 <div className="flex-shrink-0 w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-xl shadow-lg z-10 border-4 border-background">
                   2
                 </div>
-                <div className="md:w-1/2 text-center md:text-left md:pl-12">
+                <div className="w-1/2 text-left pl-12">
                   <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-muted/30 text-center">
                     <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">
                       We Bring it to Life
@@ -182,8 +282,8 @@ const Index = () => {
               </div>
               
               {/* Step 3 */}
-              <div className="flex flex-col md:flex-row items-center gap-8 relative">
-                <div className="md:w-1/2 text-center md:text-right md:pr-12">
+              <div className="flex flex-row items-center gap-8 relative">
+                <div className="w-1/2 text-right pr-12">
                   <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-muted/30 text-center">
                     <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">
                       Celebrate Your Day
@@ -196,22 +296,20 @@ const Index = () => {
                 <div className="flex-shrink-0 w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-xl shadow-lg z-10 border-4 border-background">
                   3
                 </div>
-                <div className="md:w-1/2 md:pl-12"></div>
+                <div className="w-1/2 pl-12"></div>
               </div>
             </div>
           </div>
           
           <div className="text-center mt-20">
-            <p className="text-2xl md:text-3xl font-normal text-foreground mb-8 italic">
+            <p className="text-xl md:text-2xl lg:text-3xl font-normal text-foreground mb-8 italic">
               It's That Easy!
             </p>
             
             <Button 
               size="lg" 
-              className="text-lg px-10 py-6 rounded-full font-light shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              onClick={() => {
-                console.log("Bring Your Vision to Life clicked");
-              }}
+              className="text-lg px-10 py-6 rounded-full font-light shadow-lg hover:shadow-xl transition-all duration-300"
+              onClick={scrollToContact}
             >
               Bring Your Vision to Life
             </Button>
@@ -220,7 +318,7 @@ const Index = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-20 px-4">
+      <section id="work-section" className="py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-normal mb-4 text-foreground tracking-wide">
@@ -250,7 +348,8 @@ const Index = () => {
               </button>
             )}
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+            {/* Desktop Layout */}
+            <div className="hidden md:grid grid-cols-2 gap-12 max-w-4xl mx-auto">
               {currentTestimonialSet === 0 ? (
                 <>
                   {/* Testimonial 1 */}
@@ -261,8 +360,7 @@ const Index = () => {
                         backgroundImage: "url('/UCW - Testimonial 1.png')"
                       }}
                       onClick={() => {
-                        console.log("Instagram post 1 clicked");
-                        // Add Instagram link here
+                        window.open('https://www.instagram.com/p/DL8D3zcStWx/?img_index=1', '_blank');
                       }}
                     >
                     </div>
@@ -284,8 +382,7 @@ const Index = () => {
                         backgroundImage: "url('/ucw testimonial 2.png')"
                       }}
                       onClick={() => {
-                        console.log("Instagram post 2 clicked");
-                        // Add Instagram link here
+                        window.open('https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1', '_blank');
                       }}
                     >
                     </div>
@@ -355,12 +452,59 @@ const Index = () => {
                 </>
               )}
             </div>
+
+            {/* Mobile Layout - Single Testimonial */}
+            <div className="md:hidden max-w-sm mx-auto">
+              {currentTestimonialSet === 0 ? (
+                <div className="flex flex-col items-center">
+                  <div 
+                    className="w-full aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
+                    style={{
+                      backgroundImage: "url('/UCW - Testimonial 1.png')"
+                    }}
+                    onClick={() => {
+                      window.open('https://www.instagram.com/p/DL8D3zcStWx/?img_index=1', '_blank');
+                    }}
+                  >
+                  </div>
+                  <blockquote className="text-center">
+                    <p className="text-base font-light text-foreground leading-relaxed italic mb-4">
+                      "Our wedding day was absolutely perfect! Every detail was taken care of, and we could just focus on celebrating our love. Thank you for making our dreams come true!"
+                    </p>
+                    <footer className="text-muted-foreground font-light">
+                      — Sarah & Michael
+                    </footer>
+                  </blockquote>
+                </div>
+              ) : (
+                <div className="flex flex-col items-center">
+                  <div 
+                    className="w-full aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
+                    style={{
+                      backgroundImage: "url('/ucw testimonial 2.png')"
+                    }}
+                    onClick={() => {
+                      window.open('https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1', '_blank');
+                    }}
+                  >
+                  </div>
+                  <blockquote className="text-center">
+                    <p className="text-base font-light text-foreground leading-relaxed italic mb-4">
+                      "From the first consultation to the last dance, everything was flawless. The team went above and beyond to create the most magical day of our lives!"
+                    </p>
+                    <footer className="text-muted-foreground font-light">
+                      — Jessica & David
+                    </footer>
+                  </blockquote>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-4 bg-gradient-to-b from-background to-muted/20">
+      <section className="py-16 px-6 bg-gradient-to-b from-background to-muted/20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-normal mb-8 text-foreground">
             Ready to Start Planning Your Dream Wedding?
@@ -369,9 +513,7 @@ const Index = () => {
           <Button 
             size="lg" 
             className="text-lg px-10 py-6 rounded-full font-light shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-            onClick={() => {
-              console.log("Get Started CTA clicked");
-            }}
+            onClick={scrollToContact}
           >
             Get Started Today
           </Button>
@@ -379,7 +521,7 @@ const Index = () => {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 px-4 bg-foreground text-background">
+      <section id="contact-form" className="py-20 px-6 bg-foreground text-background">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Left Side - Contact Info */}
@@ -395,12 +537,38 @@ const Index = () => {
                 <div className="flex items-start gap-4">
                   <div className="w-6 h-6 mt-1">
                     <svg className="w-full h-full text-background" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-background/60 text-sm mb-1">Location</p>
+                    <p className="text-background font-light">Calle Isla Santa Catarina M1 L30</p>
+                    <p className="text-background font-light">Cumbre del Tezal, C.P. 23454</p>
+                    <p className="text-background font-light">Cabo San Lucas, BCS, México</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 mt-1">
+                    <svg className="w-full h-full text-background" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
                     </svg>
                   </div>
                   <div>
-                    <p className="text-background/60 text-sm mb-1">Office Line Phone</p>
-                    <p className="text-background font-light">info@blackandwhite.com</p>
+                    <p className="text-background/60 text-sm mb-1">Local</p>
+                    <p className="text-background font-light">+52 (624) 131 5233</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-6 h-6 mt-1">
+                    <svg className="w-full h-full text-background" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-background/60 text-sm mb-1">Mobile</p>
+                    <p className="text-background font-light">+52 (624) 122 0146</p>
                   </div>
                 </div>
                 
@@ -412,19 +580,7 @@ const Index = () => {
                   </div>
                   <div>
                     <p className="text-background/60 text-sm mb-1">Email</p>
-                    <p className="text-background font-light">info@blackandwhite.com</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 mt-1">
-                    <svg className="w-full h-full text-background" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-background/60 text-sm mb-1">Telephone</p>
-                    <p className="text-background font-light">+54 3834-67-8765</p>
+                    <p className="text-background font-light">luba@uniquecaboweddings.com</p>
                   </div>
                 </div>
                 
@@ -474,10 +630,10 @@ const Index = () => {
                   />
                 </div>
                 
-                <input
-                  type="tel"
-                  placeholder="Phone"
-                  className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
+                <PhoneInput
+                  value={phoneNumber}
+                  onChange={setPhoneNumber}
+                  className="w-full"
                 />
                 
                 <input
@@ -486,8 +642,17 @@ const Index = () => {
                   className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
                 />
                 
-                <select className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none">
-                  <option value="">Venue of Interest</option>
+                <select 
+                  value={selectedVenue}
+                  onChange={(e) => {
+                    setSelectedVenue(e.target.value);
+                    if (e.target.value !== "custom") {
+                      setCustomVenueName("");
+                    }
+                  }}
+                  className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none"
+                >
+                  <option value="" disabled hidden>Venue of Interest</option>
                   <option value="custom">Other / Custom Venue</option>
                   <option value="acre">Acre</option>
                   <option value="baja-luna">Baja Luna</option>
@@ -501,6 +666,17 @@ const Index = () => {
                   <option value="the-cape">The Cape</option>
                   <option value="viceroy">Viceroy</option>
                 </select>
+                
+                {/* Conditional custom venue input */}
+                {selectedVenue === "custom" && (
+                  <input
+                    type="text"
+                    placeholder="Please specify your preferred venue"
+                    value={customVenueName}
+                    onChange={(e) => setCustomVenueName(e.target.value)}
+                    className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
+                  />
+                )}
                 
                 <input
                   type="number"
