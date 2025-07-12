@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+</head>
+<body>
+  <!-- This form is used by Netlify to detect the form fields during build -->
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact" />
+    <input name="bot-field" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <select name="country-code">
+      <option value="+1">+1 (US)</option>
+      <option value="+52">+52 (MX)</option>
+      <option value="+44">+44 (UK)</option>
+    </select>
+    <input type="tel" name="phone" />
+    <input type="text" name="wedding-date" />
+    <select name="venue">
+      <option value="">Venue of Interest</option>
+      <option value="custom">Other / Custom Venue</option>
+      <option value="acre">Acre</option>
+      <option value="baja-luna">Baja Luna</option>
+      <option value="cascadas">Cascadas</option>
+      <option value="corazon">Corazón</option>
+      <option value="costa-palmas">Costa Palmas</option>
+      <option value="garza-blanca">Garza Blanca</option>
+      <option value="grand-velas">Grand Velas</option>
+      <option value="mar-del-cabo">Mar del Cabo</option>
+      <option value="mas-olas">Más Olas</option>
+      <option value="the-cape">The Cape</option>
+      <option value="viceroy">Viceroy</option>
+    </select>
+    <input type="text" name="custom-venue" />
+    <input type="number" name="guest-count" />
+    <textarea name="message"></textarea>
+  </form>
+</body>
+</html> 

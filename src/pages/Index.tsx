@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { PhoneInput } from "@/components/ui/phone-input";
 import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
   const [currentTestimonialSet, setCurrentTestimonialSet] = useState(0); // 0 for testimonials 1&2, 1 for testimonials 3&4
-  const [phoneNumber, setPhoneNumber] = useState<string | undefined>("");
   const [selectedVenue, setSelectedVenue] = useState<string>("");
   const [customVenueName, setCustomVenueName] = useState<string>("");
   const [currentVenueIndex, setCurrentVenueIndex] = useState(0);
@@ -616,33 +614,94 @@ const Index = () => {
             
             {/* Right Side - Contact Form */}
             <div className="bg-slate-800 rounded-2xl p-8">
-              <form className="space-y-6">
+              <form 
+                name="contact" 
+                method="POST" 
+                action="/success"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                className="space-y-6"
+              >
+                {/* Hidden field for Netlify */}
+                <input type="hidden" name="form-name" value="contact" />
+                
+                {/* Honeypot field for spam protection */}
+                <div style={{ display: 'none' }}>
+                  <label>
+                    Don't fill this out if you're human: <input name="bot-field" />
+                  </label>
+                </div>
+                
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input
                     type="text"
+                    name="name"
                     placeholder="Name"
+                    required
                     className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
                   />
                   <input
                     type="email"
+                    name="email"
                     placeholder="Email"
+                    required
                     className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
                   />
                 </div>
                 
-                <PhoneInput
-                  value={phoneNumber}
-                  onChange={setPhoneNumber}
-                  className="w-full"
-                />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <select
+                    name="country-code"
+                    defaultValue="+52"
+                    className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none"
+                  >
+                    <option value="+52">🇲🇽 +52 (MX)</option>
+                    <option value="+1">🇺🇸 +1 (US)</option>
+                    <option value="+1">🇨🇦 +1 (CA)</option>
+                    <option value="+44">🇬🇧 +44 (UK)</option>
+                    <option value="+49">🇩🇪 +49 (DE)</option>
+                    <option value="+33">🇫🇷 +33 (FR)</option>
+                    <option value="+39">🇮🇹 +39 (IT)</option>
+                    <option value="+34">🇪🇸 +34 (ES)</option>
+                    <option value="+31">🇳🇱 +31 (NL)</option>
+                    <option value="+41">🇨🇭 +41 (CH)</option>
+                    <option value="+43">🇦🇹 +43 (AT)</option>
+                    <option value="+32">🇧🇪 +32 (BE)</option>
+                    <option value="+45">🇩🇰 +45 (DK)</option>
+                    <option value="+46">🇸🇪 +46 (SE)</option>
+                    <option value="+47">🇳🇴 +47 (NO)</option>
+                    <option value="+358">🇫🇮 +358 (FI)</option>
+                    <option value="+61">🇦🇺 +61 (AU)</option>
+                    <option value="+64">🇳🇿 +64 (NZ)</option>
+                    <option value="+81">🇯🇵 +81 (JP)</option>
+                    <option value="+82">🇰🇷 +82 (KR)</option>
+                    <option value="+86">🇨🇳 +86 (CN)</option>
+                    <option value="+91">🇮🇳 +91 (IN)</option>
+                    <option value="+55">🇧🇷 +55 (BR)</option>
+                    <option value="+54">🇦🇷 +54 (AR)</option>
+                    <option value="+56">🇨🇱 +56 (CL)</option>
+                    <option value="+57">🇨🇴 +57 (CO)</option>
+                    <option value="+51">🇵🇪 +51 (PE)</option>
+                    <option value="+58">🇻🇪 +58 (VE)</option>
+                    <option value="+27">🇿🇦 +27 (ZA)</option>
+                  </select>
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone Number (e.g., 624 123 4567)"
+                    className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400 md:col-span-2"
+                  />
+                </div>
                 
                 <input
                   type="text"
+                  name="wedding-date"
                   placeholder="Wedding Date (e.g., Spring 2025, June 15th, Summer)"
                   className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
                 />
                 
                 <select 
+                  name="venue"
                   value={selectedVenue}
                   onChange={(e) => {
                     setSelectedVenue(e.target.value);
@@ -671,6 +730,7 @@ const Index = () => {
                 {selectedVenue === "custom" && (
                   <input
                     type="text"
+                    name="custom-venue"
                     placeholder="Please specify your preferred venue"
                     value={customVenueName}
                     onChange={(e) => setCustomVenueName(e.target.value)}
@@ -680,11 +740,13 @@ const Index = () => {
                 
                 <input
                   type="number"
+                  name="guest-count"
                   placeholder="Number of Guests"
                   className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
                 />
                 
                 <textarea
+                  name="message"
                   placeholder="Message"
                   rows={5}
                   className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400 resize-none"
@@ -693,10 +755,6 @@ const Index = () => {
                 <Button 
                   type="submit"
                   className="w-full py-4 text-lg font-light bg-background text-foreground hover:bg-background/90 rounded-lg transition-colors"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    console.log("Contact form submitted");
-                  }}
                 >
                   Send Message
                 </Button>
