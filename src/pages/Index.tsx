@@ -20,12 +20,12 @@ const Index = () => {
 
       {/* Main hero section */}
       <main className="flex flex-col items-center justify-center px-4 py-12">
-        {/* Central rectangle div - 75% width with rounded corners */}
-        <div className="w-3/4 max-w-4xl bg-muted/50 rounded-3xl p-12 mb-8 min-h-[400px] flex items-center justify-center border border-border/50">
+        {/* Central rectangle div - responsive size with aspect ratio */}
+        <div className="w-[75vw] max-w-6xl bg-muted/50 rounded-3xl p-8 md:p-12 mb-8 aspect-[16/9] max-h-[60vh] flex items-center justify-center border border-border/50">
           <div className="text-center text-muted-foreground">
             {/* Placeholder content for the rectangle */}
-            <div className="w-24 h-24 bg-muted rounded-full mx-auto mb-4"></div>
-            <p className="text-sm">Your content goes here</p>
+            <div className="w-16 h-16 md:w-24 md:h-24 bg-muted rounded-full mx-auto mb-4"></div>
+            <p className="text-sm md:text-base">Your content goes here</p>
           </div>
         </div>
 
