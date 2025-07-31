@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
 
 const Index = () => {
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0); // Changed from set-based to individual testimonial index
@@ -10,6 +11,7 @@ const Index = () => {
   const [emailCopied, setEmailCopied] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   // Venue data for carousel
   const venues = [
@@ -102,6 +104,7 @@ const Index = () => {
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
   };
 
   const scrollToWork = () => {
@@ -109,6 +112,7 @@ const Index = () => {
     if (processSection) {
       processSection.scrollIntoView({ behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
   };
 
   const scrollToWhyCabo = () => {
@@ -116,6 +120,7 @@ const Index = () => {
     if (workSection) {
       workSection.scrollIntoView({ behavior: 'smooth' });
     }
+    setMobileMenuOpen(false);
   };
 
   const copyEmail = async () => {
@@ -129,28 +134,78 @@ const Index = () => {
   };
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
-      {/* Header with three buttons */}
+      {/* Responsive Header */}
       <header className="w-full py-6 px-6">
-        <div className="flex justify-center items-center gap-8">
-          <div className="flex gap-8 mr-8">
-            <Button variant="outline" className="px-6 py-2 font-light hidden md:block invisible pointer-events-none">
-              PLACEHOLDER
-            </Button>
-            <Button variant="outline" className="px-6 py-2 font-light hidden md:block invisible pointer-events-none">
-              PLACEHOLDER
-            </Button>
-          </div>
-          <Button className="px-8 py-3 font-bold bg-foreground text-background hover:bg-slate-50 hover:text-foreground shadow-md hover:shadow-lg transition-all duration-200 rounded-full" onClick={scrollToContact}>
+        {/* Desktop & Tablet Navigation */}
+        <div className="hidden md:block relative w-full h-16">
+          {/* BOOK Button - Absolutely centered on page */}
+          <Button 
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 font-bold bg-foreground text-background hover:bg-slate-50 hover:text-foreground shadow-md hover:shadow-lg transition-all duration-200 rounded-full min-w-[100px]" 
+            onClick={scrollToContact}
+          >
             BOOK
           </Button>
-          <div className="flex gap-8 ml-8">
-            <Button variant="outline" className="px-8 h-12 font-light hidden md:block rounded-full leading-none flex items-center justify-center" onClick={scrollToWork}>
+          
+          {/* Right Buttons - Positioned to the right of center */}
+          <div className="absolute left-1/2 top-1/2 -translate-y-1/2 ml-[80px] flex gap-6">
+            <Button 
+              variant="outline" 
+              className="px-8 h-12 font-light rounded-full leading-none flex items-center justify-center min-w-[120px]" 
+              onClick={scrollToWork}
+            >
               OUR WORK
             </Button>
-            <Button variant="outline" className="px-8 h-12 font-light hidden md:block rounded-full leading-none flex items-center justify-center" onClick={scrollToWhyCabo}>
+            <Button 
+              variant="outline" 
+              className="px-8 h-12 font-light rounded-full leading-none flex items-center justify-center min-w-[120px]" 
+              onClick={scrollToWhyCabo}
+            >
               WHY CABO
             </Button>
           </div>
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="md:hidden flex justify-center items-center relative">
+          <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon" className="rounded-full absolute left-0">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="left" className="w-64">
+              <div className="flex flex-col space-y-6 mt-8">
+                <Button 
+                  variant="ghost" 
+                  className="justify-start text-lg font-light h-12" 
+                  onClick={scrollToWork}
+                >
+                  OUR WORK
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  className="justify-start text-lg font-light h-12" 
+                  onClick={scrollToWhyCabo}
+                >
+                  WHY CABO
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  className="justify-start text-lg font-light h-12" 
+                  onClick={scrollToContact}
+                >
+                  CONTACT
+                </Button>
+              </div>
+            </SheetContent>
+          </Sheet>
+
+          <Button 
+            className="px-6 py-2 font-bold bg-foreground text-background hover:bg-slate-50 hover:text-foreground shadow-md hover:shadow-lg transition-all duration-200 rounded-full" 
+            onClick={scrollToContact}
+          >
+            BOOK
+          </Button>
         </div>
       </header>
 
