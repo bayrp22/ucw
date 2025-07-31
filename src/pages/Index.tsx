@@ -7,6 +7,7 @@ const Index = () => {
   const [selectedVenue, setSelectedVenue] = useState<string>("");
   const [customVenueName, setCustomVenueName] = useState<string>("");
   const [currentVenueIndex, setCurrentVenueIndex] = useState(0);
+  const [emailCopied, setEmailCopied] = useState(false);
 
   // Venue data for carousel
   const venues = [
@@ -15,12 +16,12 @@ const Index = () => {
     { name: "Viceroy", image: "/ChatGPT Image Jul 12, 2025, 10_20_03 PM.png" },
     { name: "Baja Luna", image: "/ChatGPT Image Jul 12, 2025, 10_41_25 PM.png" },
     { name: "Más Olas", image: "/ChatGPT Image Jul 12, 2025, 10_20_59 PM.png" },
-    { name: "Cascadas", image: "/placeholder.svg" },
-    { name: "Costa Palmas", image: "/placeholder.svg" },
-    { name: "Garza Blanca", image: "/placeholder.svg" },
+    { name: "Cascadas", image: "/Cascadas.png" },
+    { name: "Costa Palmas", image: "/Costa Palmas.png" },
+    { name: "Garza Blanca", image: "/Garza Blanca.png" },
     { name: "Grand Velas", image: "/grandvelas.png" },
-    { name: "Mar del Cabo", image: "/placeholder.svg" },
-    { name: "The Cape", image: "/placeholder.svg" },
+    { name: "Mar del Cabo", image: "/Mar del Cabo.png" },
+    { name: "The Cape", image: "/The Cape.png" },
   ];
 
   // Auto-advance venue carousel - smooth continuous rotation
@@ -52,6 +53,16 @@ const Index = () => {
       workSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText('luba@uniquecaboweddings.com');
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy email:', err);
+    }
+  };
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Header with three buttons */}
@@ -69,10 +80,10 @@ const Index = () => {
             BOOK
           </Button>
           <div className="flex gap-8 ml-8">
-            <Button variant="outline" className="px-8 py-3 font-light hidden md:block rounded-full" onClick={scrollToWork}>
+            <Button variant="outline" className="px-8 h-12 font-light hidden md:block rounded-full leading-none flex items-center justify-center" onClick={scrollToWork}>
               OUR WORK
             </Button>
-            <Button variant="outline" className="px-8 py-3 font-light hidden md:block rounded-full" onClick={scrollToWhyCabo}>
+            <Button variant="outline" className="px-8 h-12 font-light hidden md:block rounded-full leading-none flex items-center justify-center" onClick={scrollToWhyCabo}>
               WHY CABO
             </Button>
           </div>
@@ -101,7 +112,7 @@ const Index = () => {
             className="text-lg px-8 py-6 rounded-full font-light"
             onClick={scrollToContact}
           >
-            Contact a Local Wedding Pioneer
+            Contact a Local Wedding Planner
           </Button>
         </div>
       </main>
@@ -324,7 +335,7 @@ const Index = () => {
             )}
             
             {/* Desktop Layout */}
-            <div className="hidden md:grid grid-cols-2 gap-12 max-w-4xl mx-auto">
+            <div className="hidden md:grid grid-cols-2 gap-48 max-w-7xl mx-auto">
               {currentTestimonialSet === 0 ? (
                 <>
                   {/* Testimonial 1 */}
@@ -479,7 +490,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 px-6 bg-gradient-to-b from-background to-muted/20">
+      <section className="pt-8 pb-16 px-6 bg-gradient-to-b from-background to-muted/20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-normal mb-8 text-foreground">
             Ready to Start Planning Your Dream Wedding?
@@ -505,7 +516,7 @@ const Index = () => {
                 GET IN TOUCH
               </h2>
               <p className="text-lg font-light text-background/80 mb-12 leading-relaxed">
-                For questions or to begin planning your event with us, please contact our team using the details below.
+                For any inquiries or to begin planning your wedding journey, please contact our team using the details below.
               </p>
               
               <div className="space-y-8">
@@ -517,21 +528,8 @@ const Index = () => {
                   </div>
                   <div>
                     <p className="text-background/60 text-sm mb-1">Location</p>
-                    <p className="text-background font-light">Calle Isla Santa Catarina M1 L30</p>
-                    <p className="text-background font-light">Cumbre del Tezal, C.P. 23454</p>
+                    <p className="text-background font-light">El Tezal, C.P. 23454</p>
                     <p className="text-background font-light">Cabo San Lucas, BCS, México</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start gap-4">
-                  <div className="w-6 h-6 mt-1">
-                    <svg className="w-full h-full text-background" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-background/60 text-sm mb-1">Local</p>
-                    <p className="text-background font-light">+52 (624) 131 5233</p>
                   </div>
                 </div>
                 
@@ -553,9 +551,39 @@ const Index = () => {
                       <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
                     </svg>
                   </div>
-                  <div>
+                  <div className="flex-1">
                     <p className="text-background/60 text-sm mb-1">Email</p>
-                    <p className="text-background font-light">luba@uniquecaboweddings.com</p>
+                    <div className="flex items-center gap-3">
+                      <a 
+                        href="mailto:luba@uniquecaboweddings.com?subject=Wedding Inquiry"
+                        className="text-background font-light hover:text-background/80 transition-colors cursor-pointer underline"
+                        onClick={(e) => {
+                          // Fallback for browsers that might block mailto
+                          try {
+                            window.location.href = "mailto:luba@uniquecaboweddings.com?subject=Wedding Inquiry";
+                          } catch (error) {
+                            console.log('Mailto not supported, please copy email manually');
+                          }
+                        }}
+                      >
+                        luba@uniquecaboweddings.com
+                      </a>
+                      <button
+                        onClick={copyEmail}
+                        className="p-1.5 rounded-md bg-background/10 hover:bg-background/20 transition-colors group"
+                        title="Copy email address"
+                      >
+                        {emailCopied ? (
+                          <svg className="w-4 h-4 text-green-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                          </svg>
+                        ) : (
+                          <svg className="w-5 h-5 text-background group-hover:text-background/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/>
+                          </svg>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
                 
@@ -568,21 +596,26 @@ const Index = () => {
                   <div>
                     <p className="text-background/60 text-sm mb-1">Follow us</p>
                     <div className="flex gap-3 mt-2">
-                      <div className="w-6 h-6 text-background hover:text-background/80 cursor-pointer">
-                        <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
-                        </svg>
-                      </div>
-                      <div className="w-6 h-6 text-background hover:text-background/80 cursor-pointer">
+                      <a 
+                        href="https://www.instagram.com/UniqueCaboWeddings/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-6 h-6 text-background hover:text-background/80 cursor-pointer transition-colors"
+                      >
                         <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                         </svg>
-                      </div>
-                      <div className="w-6 h-6 text-background hover:text-background/80 cursor-pointer">
+                      </a>
+                      <a 
+                        href="https://uniquecaboweddings.com/" 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="w-6 h-6 text-background hover:text-background/80 cursor-pointer transition-colors"
+                      >
                         <svg className="w-full h-full" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
                         </svg>
-                      </div>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -673,46 +706,61 @@ const Index = () => {
                 <input
                   type="text"
                   name="wedding-date"
-                  placeholder="Wedding Date (e.g., Spring 2025, June 15th, Summer)"
+                  placeholder="Ideal Wedding Date (e.g., Spring 2025, June 15th, Summer)"
                   className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
                 />
                 
-                <select 
-                  name="venue"
-                  value={selectedVenue}
-                  onChange={(e) => {
-                    setSelectedVenue(e.target.value);
-                    if (e.target.value !== "custom") {
-                      setCustomVenueName("");
-                    }
-                  }}
-                  className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none"
-                >
-                  <option value="" disabled hidden>Venue of Interest</option>
-                  <option value="custom">Other / Custom Venue</option>
-                  <option value="acre">Acre</option>
-                  <option value="baja-luna">Baja Luna</option>
-                  <option value="cascadas">Cascadas</option>
-                  <option value="corazon">Corazón</option>
-                  <option value="costa-palmas">Costa Palmas</option>
-                  <option value="garza-blanca">Garza Blanca</option>
-                  <option value="grand-velas">Grand Velas</option>
-                  <option value="mar-del-cabo">Mar del Cabo</option>
-                  <option value="mas-olas">Más Olas</option>
-                  <option value="the-cape">The Cape</option>
-                  <option value="viceroy">Viceroy</option>
-                </select>
-                
-                {/* Conditional custom venue input */}
-                {selectedVenue === "custom" && (
-                  <input
-                    type="text"
-                    name="custom-venue"
-                    placeholder="Please specify your preferred venue"
-                    value={customVenueName}
-                    onChange={(e) => setCustomVenueName(e.target.value)}
-                    className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
-                  />
+                {selectedVenue === "custom" ? (
+                  <div className="relative">
+                    <input
+                      type="text"
+                      name="venue"
+                      placeholder="Please specify your preferred venue"
+                      value={customVenueName}
+                      onChange={(e) => setCustomVenueName(e.target.value)}
+                      className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
+                      autoFocus
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setSelectedVenue("");
+                        setCustomVenueName("");
+                      }}
+                      className="absolute right-2 top-1/2 -translate-y-1/2 text-background/60 hover:text-background transition-colors"
+                      title="Back to venue selection"
+                    >
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12"/>
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <select 
+                    name="venue"
+                    value={selectedVenue}
+                    onChange={(e) => {
+                      setSelectedVenue(e.target.value);
+                      if (e.target.value !== "custom") {
+                        setCustomVenueName("");
+                      }
+                    }}
+                    className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none"
+                  >
+                    <option value="" disabled hidden>Venue of Interest</option>
+                    <option value="custom">Other / Custom Venue</option>
+                    <option value="acre">Acre</option>
+                    <option value="baja-luna">Baja Luna</option>
+                    <option value="cascadas">Cascadas</option>
+                    <option value="corazon">Corazón</option>
+                    <option value="costa-palmas">Costa Palmas</option>
+                    <option value="garza-blanca">Garza Blanca</option>
+                    <option value="grand-velas">Grand Velas</option>
+                    <option value="mar-del-cabo">Mar del Cabo</option>
+                    <option value="mas-olas">Más Olas</option>
+                    <option value="the-cape">The Cape</option>
+                    <option value="viceroy">Viceroy</option>
+                  </select>
                 )}
                 
                 <input
