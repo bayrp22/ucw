@@ -15,13 +15,19 @@ const Index = () => {
     { name: "Viceroy", image: "/ChatGPT Image Jul 12, 2025, 10_20_03 PM.png" },
     { name: "Baja Luna", image: "/ChatGPT Image Jul 12, 2025, 10_41_25 PM.png" },
     { name: "Más Olas", image: "/ChatGPT Image Jul 12, 2025, 10_20_59 PM.png" },
+    { name: "Cascadas", image: "/placeholder.svg" },
+    { name: "Costa Palmas", image: "/placeholder.svg" },
+    { name: "Garza Blanca", image: "/placeholder.svg" },
+    { name: "Grand Velas", image: "/grandvelas.png" },
+    { name: "Mar del Cabo", image: "/placeholder.svg" },
+    { name: "The Cape", image: "/placeholder.svg" },
   ];
 
   // Auto-advance venue carousel - smooth continuous rotation
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentVenueIndex((prev) => prev + 1);
-    }, 50); // Very frequent updates for smooth animation
+      setCurrentVenueIndex((prev) => prev + 0.1);
+    }, 60); // Smooth animation timing
 
     return () => clearInterval(interval);
   }, []);
@@ -109,67 +115,28 @@ const Index = () => {
             </p>
           </div>
           
-          {/* Desktop Grid */}
-          <div className="hidden md:grid grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center">
-            {venues.map((venue, index) => (
-              <div key={venue.name} className="flex flex-col items-center">
-                <div className="w-24 h-16 flex items-center justify-center mb-2">
-                  <img 
-                    src={venue.image} 
-                    alt={venue.name} 
-                    className="max-w-full max-h-full object-contain"
-                  />
-                </div>
-                <span className="text-xs font-light text-muted-foreground">{venue.name}</span>
-              </div>
-            ))}
-            {/* CTA Button */}
-            <div className="flex flex-col items-center">
-              <Button 
-                variant="outline" 
-                className="w-24 h-16 text-xs font-semibold flex items-center justify-center mb-2 border-2 border-foreground hover:bg-foreground hover:text-background transition-colors"
-                onClick={scrollToContact}
-              >
-                Reach Out
-              </Button>
-            </div>
-          </div>
-
-          {/* Mobile Carousel */}
-          <div className="md:hidden">
-            <div className="relative overflow-hidden">
-              <div 
-                className="flex"
-                style={{ 
-                  transform: `translateX(-${(currentVenueIndex * 0.5) % (venues.length * 33.333)}%)`,
-                  transition: 'none'
-                }}
-              >
-                {/* Multiple sets for seamless infinite scroll */}
-                {[...venues, ...venues, ...venues, ...venues].map((venue, index) => (
-                  <div key={`${venue.name}-${index}`} className="flex-shrink-0 w-1/3 flex flex-col items-center px-4">
-                    <div className="w-20 h-14 flex items-center justify-center mb-2">
-                      <img 
-                        src={venue.image} 
-                        alt={venue.name} 
-                        className="max-w-full max-h-full object-contain"
-                      />
-                    </div>
-                    <span className="text-xs font-light text-muted-foreground text-center">{venue.name}</span>
+          {/* Infinite Carousel - Shows 5 venues at a time */}
+          <div className="relative overflow-hidden">
+            <div 
+              className="flex"
+              style={{ 
+                transform: `translateX(-${(currentVenueIndex * 2) % (venues.length * 20)}%)`,
+                transition: 'transform 0.1s linear'
+              }}
+            >
+              {/* Multiple sets for seamless infinite scroll */}
+              {[...venues, ...venues, ...venues, ...venues, ...venues].map((venue, index) => (
+                <div key={`${venue.name}-${index}`} className="flex-shrink-0 w-1/5 flex flex-col items-center px-2 md:px-4">
+                  <div className="w-20 h-16 md:w-32 md:h-24 flex items-center justify-center mb-3">
+                    <img 
+                      src={venue.image} 
+                      alt={venue.name} 
+                      className="max-w-full max-h-full object-contain"
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Mobile CTA Button */}
-            <div className="flex justify-center mt-8">
-              <Button 
-                variant="outline" 
-                className="px-6 py-3 text-sm font-semibold border-2 border-foreground hover:bg-foreground hover:text-background transition-colors"
-                onClick={scrollToContact}
-              >
-                Reach Out
-              </Button>
+                  <span className="text-sm md:text-base font-light text-muted-foreground text-center">{venue.name}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
