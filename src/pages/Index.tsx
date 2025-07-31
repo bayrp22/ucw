@@ -3,11 +3,13 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const Index = () => {
-  const [currentTestimonialSet, setCurrentTestimonialSet] = useState(0); // 0 for testimonials 1&2, 1 for testimonials 3&4
+  const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0); // Changed from set-based to individual testimonial index
   const [selectedVenue, setSelectedVenue] = useState<string>("");
   const [customVenueName, setCustomVenueName] = useState<string>("");
   const [currentVenueIndex, setCurrentVenueIndex] = useState(0);
   const [emailCopied, setEmailCopied] = useState(false);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Venue data for carousel
   const venues = [
@@ -32,6 +34,68 @@ const Index = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Testimonials data
+  const testimonials = [
+    {
+      image: "/UCW - Testimonial 1.png",
+      quote: "Our wedding day was absolutely perfect! Every detail was taken care of, and we could just focus on celebrating our love. Thank you for making our dreams come true!",
+      author: "Sarah & Michael",
+      link: "https://www.instagram.com/p/DL8D3zcStWx/?img_index=1"
+    },
+    {
+      image: "/ucw testimonial 2.png",
+      quote: "From the first consultation to the last dance, everything was flawless. The team went above and beyond to create the most magical day of our lives!",
+      author: "Jessica & David",
+      link: "https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1"
+    },
+    {
+      image: "/UCW - Testimonial 1.png", // Placeholder - reusing image
+      quote: "Absolutely incredible experience! The team made our destination wedding seamless and magical. Every guest was raving about how perfect everything was!",
+      author: "Emma & James",
+      link: "#"
+    },
+    {
+      image: "/ucw testimonial 2.png", // Placeholder - reusing image
+      quote: "Words cannot express how grateful we are! Our wedding exceeded all expectations. The attention to detail and personal touch made all the difference.",
+      author: "Maria & Carlos",
+      link: "#"
+    }
+  ];
+
+  const nextTestimonial = () => {
+    setCurrentTestimonialIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prevTestimonial = () => {
+    setCurrentTestimonialIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  // Touch swipe handling
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      nextTestimonial();
+    } else if (isRightSwipe) {
+      prevTestimonial();
+    }
+  };
 
   const scrollToContact = () => {
     const contactSection = document.getElementById('contact-form');
@@ -313,97 +377,83 @@ const Index = () => {
             <div className="w-24 h-1 bg-foreground/20 mx-auto"></div>
           </div>
           
-          {/* Desktop Layout - All testimonials visible */}
-          <div className="hidden md:grid grid-cols-2 gap-32 max-w-6xl mx-auto mb-20">
-            {/* Testimonial 1 */}
-            <div className="flex flex-col items-center">
-              <div 
-                className="w-4/5 max-w-md aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
-                style={{
-                  backgroundImage: "url('/UCW - Testimonial 1.png')"
-                }}
-                onClick={() => {
-                  window.open('https://www.instagram.com/p/DL8D3zcStWx/?img_index=1', '_blank');
-                }}
-              >
+          {/* Testimonial Carousel */}
+          <div className="relative w-full max-w-4xl mx-auto">
+            {/* Testimonial Counter */}
+            <div className="text-center mb-8">
+              <div className="text-sm text-muted-foreground">
+                {currentTestimonialIndex + 1} of {testimonials.length}
               </div>
-              <blockquote className="text-center">
-                <p className="text-lg font-light text-foreground leading-relaxed italic mb-4">
-                  "Our wedding day was absolutely perfect! Every detail was taken care of, and we could just focus on celebrating our love. Thank you for making our dreams come true!"
-                </p>
-                <footer className="text-muted-foreground font-light">
-                  — Sarah & Michael
-                </footer>
-              </blockquote>
-            </div>
-            
-            {/* Testimonial 2 */}
-            <div className="flex flex-col items-center">
-              <div 
-                className="w-4/5 max-w-md aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
-                style={{
-                  backgroundImage: "url('/ucw testimonial 2.png')"
-                }}
-                onClick={() => {
-                  window.open('https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1', '_blank');
-                }}
-              >
-              </div>
-              <blockquote className="text-center">
-                <p className="text-lg font-light text-foreground leading-relaxed italic mb-4">
-                  "From the first consultation to the last dance, everything was flawless. The team went above and beyond to create the most magical day of our lives!"
-                </p>
-                <footer className="text-muted-foreground font-light">
-                  — Jessica & David
-                </footer>
-              </blockquote>
-            </div>
-          </div>
-
-          {/* Mobile Layout - Simple single column */}
-          <div className="md:hidden space-y-12 max-w-xs mx-auto">
-            {/* Mobile Testimonial 1 */}
-            <div className="flex flex-col items-center">
-              <div 
-                className="w-full max-w-xs aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
-                style={{
-                  backgroundImage: "url('/UCW - Testimonial 1.png')"
-                }}
-                onClick={() => {
-                  window.open('https://www.instagram.com/p/DL8D3zcStWx/?img_index=1', '_blank');
-                }}
-              >
-              </div>
-              <blockquote className="text-center">
-                <p className="text-base font-light text-foreground leading-relaxed italic mb-4">
-                  "Our wedding day was absolutely perfect! Every detail was taken care of, and we could just focus on celebrating our love. Thank you for making our dreams come true!"
-                </p>
-                <footer className="text-muted-foreground font-light">
-                  — Sarah & Michael
-                </footer>
-              </blockquote>
             </div>
 
-            {/* Mobile Testimonial 2 */}
-            <div className="flex flex-col items-center">
-              <div 
-                className="w-full max-w-xs aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
-                style={{
-                  backgroundImage: "url('/ucw testimonial 2.png')"
-                }}
-                onClick={() => {
-                  window.open('https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1', '_blank');
-                }}
+            {/* Testimonial Content */}
+            <div 
+              className="relative min-h-[600px]"
+              onTouchStart={onTouchStart}
+              onTouchMove={onTouchMove}
+              onTouchEnd={onTouchEnd}
+            >
+              {/* Navigation Buttons - Hidden on mobile, visible on tablet+ */}
+              <button
+                onClick={prevTestimonial}
+                className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors z-10 shadow-lg"
+                title="Previous Testimonial"
               >
-              </div>
-              <blockquote className="text-center">
-                <p className="text-base font-light text-foreground leading-relaxed italic mb-4">
-                  "From the first consultation to the last dance, everything was flawless. The team went above and beyond to create the most magical day of our lives!"
-                </p>
-                <footer className="text-muted-foreground font-light">
-                  — Jessica & David
-                </footer>
-              </blockquote>
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              
+              <button
+                onClick={nextTestimonial}
+                className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors z-10 shadow-lg"
+                title="Next Testimonial"
+              >
+                <ChevronRight className="w-6 h-6" />
+              </button>
+              {testimonials.map((testimonial, index) => (
+                <div
+                  key={index}
+                  className={`absolute inset-0 flex flex-col items-center transition-opacity duration-500 ${
+                    index === currentTestimonialIndex ? 'opacity-100' : 'opacity-0'
+                  }`}
+                >
+                  <div 
+                    className="w-4/5 max-w-md aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
+                    style={{
+                      backgroundImage: `url('${testimonial.image}')`
+                    }}
+                    onClick={() => {
+                      if (testimonial.link && testimonial.link !== '#') {
+                        window.open(testimonial.link, '_blank');
+                      }
+                    }}
+                  >
+                  </div>
+                  <blockquote className="text-center max-w-2xl">
+                    <p className="text-lg font-light text-foreground leading-relaxed italic mb-4">
+                      "{testimonial.quote}"
+                    </p>
+                    <footer className="text-muted-foreground font-light">
+                      — {testimonial.author}
+                    </footer>
+                  </blockquote>
+                </div>
+              ))}
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center space-x-2 mt-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonialIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentTestimonialIndex 
+                      ? 'bg-foreground' 
+                      : 'bg-foreground/30 hover:bg-foreground/50'
+                  }`}
+                  title={`Go to testimonial ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>
