@@ -123,6 +123,37 @@ const Index = () => {
     setMobileMenuOpen(false);
   };
 
+  // Function to convert venue names to form values
+  const getVenueFormValue = (venueName: string): string => {
+    const venueMap: { [key: string]: string } = {
+      "Corazon": "corazon",
+      "Acre": "acre", 
+      "Viceroy": "viceroy",
+      "Baja Luna": "baja-luna",
+      "Más Olas": "mas-olas",
+      "Cascadas": "cascadas",
+      "Costa Palmas": "costa-palmas",
+      "Garza Blanca": "garza-blanca",
+      "Grand Velas": "grand-velas",
+      "Mar del Cabo": "mar-del-cabo",
+      "The Cape": "the-cape"
+    };
+    return venueMap[venueName] || "";
+  };
+
+  // Handle venue click from carousel
+  const handleVenueClick = (venueName: string) => {
+    const formValue = getVenueFormValue(venueName);
+    if (formValue) {
+      setSelectedVenue(formValue);
+      // Scroll to contact form
+      const contactSection = document.getElementById('contact-form');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  };
+
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText('luba@uniquecaboweddings.com');
@@ -256,15 +287,19 @@ const Index = () => {
             >
               {/* Multiple sets for seamless infinite scroll */}
               {[...venues, ...venues, ...venues, ...venues, ...venues].map((venue, index) => (
-                <div key={`${venue.name}-${index}`} className="flex-shrink-0 w-1/5 flex flex-col items-center px-2 md:px-4">
-                  <div className="w-20 h-16 md:w-32 md:h-24 flex items-center justify-center mb-3">
+                <div 
+                  key={`${venue.name}-${index}`} 
+                  className="flex-shrink-0 w-1/5 flex flex-col items-center px-2 md:px-4 cursor-pointer group"
+                  onClick={() => handleVenueClick(venue.name)}
+                >
+                  <div className="w-20 h-16 md:w-32 md:h-24 flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-105">
                     <img 
                       src={venue.image} 
                       alt={venue.name} 
-                      className="max-w-full max-h-full object-contain"
+                      className="max-w-full max-h-full object-contain group-hover:opacity-80 transition-opacity duration-200"
                     />
                   </div>
-                  <span className="text-sm md:text-base font-light text-muted-foreground text-center">{venue.name}</span>
+                  <span className="text-sm md:text-base font-light text-muted-foreground text-center group-hover:text-foreground transition-colors duration-200">{venue.name}</span>
                 </div>
               ))}
             </div>
@@ -423,7 +458,7 @@ const Index = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section id="work-section" className="py-20 px-6">
+      <section id="work-section" className="py-12 md:py-20 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-normal mb-4 text-foreground tracking-wide">
@@ -496,7 +531,7 @@ const Index = () => {
             </div>
 
             {/* Dots Indicator */}
-            <div className="flex justify-center space-x-2 mt-8">
+            <div className="flex justify-center space-x-2 mt-4 md:mt-8">
               {testimonials.map((_, index) => (
                 <button
                   key={index}
@@ -515,7 +550,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="pt-8 pb-16 px-6 bg-gradient-to-b from-background to-muted/20">
+      <section className="pt-4 md:pt-8 pb-12 md:pb-16 px-6 bg-gradient-to-b from-background to-muted/20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-3xl md:text-4xl font-normal mb-8 text-foreground">
             Ready to Start Planning Your Dream Wedding?
@@ -534,13 +569,29 @@ const Index = () => {
       {/* Contact Form Section */}
       <section id="contact-form" className="py-20 px-6 bg-foreground text-background">
         <div className="max-w-7xl mx-auto">
+          {/* Mobile: GET IN TOUCH heading above form */}
+          <div className="lg:hidden text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-normal text-background">
+              GET IN TOUCH
+            </h2>
+          </div>
+          
+          {/* Mobile/Tablet: Subtext between form and contact info */}
+          <div className="lg:hidden text-center mb-8">
+            <p className="text-lg font-light text-background/80 leading-relaxed">
+              For any inquiries or to begin planning your wedding journey, please contact our team using the details below.
+            </p>
+          </div>
+
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
-            {/* Left Side - Contact Info */}
-            <div>
-              <h2 className="text-4xl md:text-5xl font-normal mb-8 text-background">
+            {/* Mobile: Contact Info Second, Desktop: Contact Info Left */}
+            <div className="order-2 lg:order-1">
+              {/* Desktop: GET IN TOUCH heading */}
+              <h2 className="hidden lg:block text-4xl md:text-5xl font-normal mb-8 text-background">
                 GET IN TOUCH
               </h2>
-              <p className="text-lg font-light text-background/80 mb-12 leading-relaxed">
+              {/* Desktop: Subtext above contact info */}
+              <p className="hidden lg:block text-lg font-light text-background/80 mb-12 leading-relaxed">
                 For any inquiries or to begin planning your wedding journey, please contact our team using the details below.
               </p>
               
@@ -645,10 +696,12 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+              
+
             </div>
             
-            {/* Right Side - Contact Form */}
-            <div className="bg-slate-800 rounded-2xl p-8">
+            {/* Mobile: Form First, Desktop: Form Right */}
+            <div className="bg-slate-800 rounded-2xl p-8 order-1 lg:order-2">
               <form 
                 name="contact" 
                 method="POST" 
