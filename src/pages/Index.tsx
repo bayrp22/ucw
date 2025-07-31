@@ -33,14 +33,14 @@ const Index = () => {
     }
   };
 
-  const scrollToProcess = () => {
+  const scrollToWork = () => {
     const processSection = document.getElementById('process-section');
     if (processSection) {
       processSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  const scrollToWork = () => {
+  const scrollToWhyCabo = () => {
     const workSection = document.getElementById('work-section');
     if (workSection) {
       workSection.scrollIntoView({ behavior: 'smooth' });
@@ -50,16 +50,26 @@ const Index = () => {
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Header with three buttons */}
       <header className="w-full py-6 px-6">
-        <div className="flex justify-center gap-8">
-          <Button variant="outline" className="px-6 py-2 font-light hidden md:block" onClick={scrollToProcess}>
-            OUR PROCESS
-          </Button>
-          <Button className="px-6 py-2 font-bold bg-foreground text-background hover:bg-foreground/90 shadow-md hover:shadow-lg transition-all duration-200" onClick={scrollToContact}>
+        <div className="flex justify-center items-center gap-8">
+          <div className="flex gap-8 mr-8">
+            <Button variant="outline" className="px-6 py-2 font-light hidden md:block invisible pointer-events-none">
+              PLACEHOLDER
+            </Button>
+            <Button variant="outline" className="px-6 py-2 font-light hidden md:block invisible pointer-events-none">
+              PLACEHOLDER
+            </Button>
+          </div>
+          <Button className="px-8 py-3 font-bold bg-foreground text-background hover:bg-slate-50 hover:text-foreground shadow-md hover:shadow-lg transition-all duration-200 rounded-full" onClick={scrollToContact}>
             BOOK
           </Button>
-          <Button variant="outline" className="px-6 py-2 font-light hidden md:block" onClick={scrollToWork}>
-            OUR WORK
-          </Button>
+          <div className="flex gap-8 ml-8">
+            <Button variant="outline" className="px-8 py-3 font-light hidden md:block rounded-full" onClick={scrollToWork}>
+              OUR WORK
+            </Button>
+            <Button variant="outline" className="px-8 py-3 font-light hidden md:block rounded-full" onClick={scrollToWhyCabo}>
+              WHY CABO
+            </Button>
+          </div>
         </div>
       </header>
 
