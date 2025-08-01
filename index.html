@@ -6,9 +6,34 @@
     <title>Cabo Destination Weddings</title>
     <meta name="description" content="Plan your dream destination wedding in Cabo San Lucas with expert local wedding planners. From beachfront venues to luxury resorts, we create unforgettable Cabo weddings.">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="/heart-favicon.svg" />
-    <link rel="apple-touch-icon" href="/heart-favicon.svg" />
+    <!-- Favicon - Dynamic theme support -->
+    <link rel="icon" id="favicon" type="image/png" href="/ucw black.png" />
+    <link rel="apple-touch-icon" id="apple-touch-icon" href="/ucw black.png" />
+    
+    <script>
+      // Set favicon based on theme preference
+      function setFavicon() {
+        const favicon = document.getElementById('favicon');
+        const appleTouchIcon = document.getElementById('apple-touch-icon');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (prefersDark) {
+          // Dark theme - use white icon
+          favicon.href = '/ucw.png';
+          appleTouchIcon.href = '/ucw.png';
+        } else {
+          // Light theme - use black icon
+          favicon.href = '/ucw black.png';
+          appleTouchIcon.href = '/ucw black.png';
+        }
+      }
+      
+      // Set favicon on load
+      setFavicon();
+      
+      // Listen for theme changes
+      window.matchMedia('(prefers-color-scheme: dark)').addListener(setFavicon);
+    </script>
     
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
