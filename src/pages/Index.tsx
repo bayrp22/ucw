@@ -182,7 +182,7 @@ const Index = () => {
         <div className="hidden md:block relative w-full h-16">
           {/* BOOK Button - Absolutely centered on page */}
           <Button 
-            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 font-bold bg-foreground text-background hover:bg-slate-50 hover:text-foreground shadow-md hover:shadow-lg transition-all duration-200 rounded-full min-w-[100px]" 
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 font-bold bg-foreground text-background hover:bg-purple-600 hover:text-white shadow-md hover:shadow-lg transition-all duration-200 rounded-full min-w-[100px]" 
             onClick={scrollToContact}
           >
             BOOK
@@ -243,7 +243,7 @@ const Index = () => {
           </Sheet>
 
           <Button 
-            className="px-6 py-2 font-bold bg-foreground text-background hover:bg-slate-50 hover:text-foreground shadow-md hover:shadow-lg transition-all duration-200 rounded-full" 
+            className="px-6 py-2 font-bold bg-foreground text-background hover:bg-purple-600 hover:text-white shadow-md hover:shadow-lg transition-all duration-200 rounded-full" 
             onClick={scrollToContact}
           >
             BOOK
