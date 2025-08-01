@@ -43,26 +43,26 @@ const Index = () => {
   const testimonials = [
     {
       image: "/UCW - Testimonial 1.png",
-      quote: "Our wedding day was absolutely perfect! Every detail was taken care of, and we could just focus on celebrating our love. Thank you for making our dreams come true!",
-      author: "Sarah & Michael",
+      quote: "We can't say enough good things about Luba and Borja at Unique Cabo Weddings! Planning a destination wedding from Texas while they were in Cabo could have been overwhelming, but they made it so easy and stress-free from the very beginning.",
+      author: "Ayana & Austin",
       link: "https://www.instagram.com/p/DL8D3zcStWx/?img_index=1"
     },
     {
       image: "/ucw testimonial 2.png",
-      quote: "From the first consultation to the last dance, everything was flawless. The team went above and beyond to create the most magical day of our lives!",
-      author: "Jessica & David",
+      quote: "We had started planning on our own for a few months before meeting her, but once we started working together she made the whole process feel much less intimidating. Luba worked incredibly hard to make the wedding planning as stress-free as possible and the day-of go as smoothly as it did.",
+      author: "Victoria & Patrick",
       link: "https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1"
     },
     {
       image: "/UCW - Testimonial 1.png", // Placeholder - reusing image
-      quote: "Absolutely incredible experience! The team made our destination wedding seamless and magical. Every guest was raving about how perfect everything was!",
-      author: "Emma & James",
+      quote: "She makes sure that you are not alone, that she is there to help you and guide you, and honestly, she's someone that makes you feel like there's no such thing as a stupid question. She helps you work with your budget to find what things are most important to you and helping you achieve all the extra things you may want.",
+      author: "Eli & Ashley",
       link: "#"
     },
     {
       image: "/ucw testimonial 2.png", // Placeholder - reusing image
-      quote: "Words cannot express how grateful we are! Our wedding exceeded all expectations. The attention to detail and personal touch made all the difference.",
-      author: "Maria & Carlos",
+      quote: "Luba was an absolute dream wedding planner! From start to finish, she poured her heart and soul into creating the most magical weekend for my husband and me. Her attention to detail was impeccable, and her genuine care and love shone through in every aspect of the planning process.",
+      author: "Nicole & Chris",
       link: "#"
     }
   ];
@@ -481,10 +481,26 @@ const Index = () => {
           {/* Testimonial Carousel */}
           <div className="relative w-full max-w-4xl mx-auto">
             {/* Testimonial Counter */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-4">
               <div className="text-sm text-muted-foreground">
                 {currentTestimonialIndex + 1} of {testimonials.length}
               </div>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center space-x-2 mb-8">
+              {testimonials.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentTestimonialIndex(index)}
+                  className={`w-3 h-3 rounded-full transition-colors ${
+                    index === currentTestimonialIndex 
+                      ? 'bg-foreground' 
+                      : 'bg-foreground/30 hover:bg-foreground/50'
+                  }`}
+                  title={`Go to testimonial ${index + 1}`}
+                />
+              ))}
             </div>
 
             {/* Testimonial Content */}
@@ -541,20 +557,16 @@ const Index = () => {
               ))}
             </div>
 
-            {/* Dots Indicator */}
-            <div className="flex justify-center space-x-2 mt-4 md:mt-8">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentTestimonialIndex(index)}
-                  className={`w-3 h-3 rounded-full transition-colors ${
-                    index === currentTestimonialIndex 
-                      ? 'bg-foreground' 
-                      : 'bg-foreground/30 hover:bg-foreground/50'
-                  }`}
-                  title={`Go to testimonial ${index + 1}`}
-                />
-              ))}
+            {/* More Reviews Button */}
+            <div className="flex justify-center mt-4 md:mt-8">
+              <Button 
+                variant="outline"
+                size="lg"
+                className="px-8 py-3 rounded-full font-light hover:bg-foreground hover:text-background transition-all duration-300"
+                onClick={() => window.open('https://www.weddingwire.com/reviews/unique-cabo-weddings/a93ce236a1751046.html#gallery', '_blank')}
+              >
+                More from our clients
+              </Button>
             </div>
           </div>
         </div>
