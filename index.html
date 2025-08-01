@@ -7,32 +7,53 @@
     <meta name="description" content="Plan your dream destination wedding in Cabo San Lucas with expert local wedding planners. From beachfront venues to luxury resorts, we create unforgettable Cabo weddings.">
     
     <!-- Favicon - Dynamic theme support -->
-    <link rel="icon" id="favicon" type="image/png" href="/ucw black.png" />
-    <link rel="apple-touch-icon" id="apple-touch-icon" href="/ucw black.png" />
+    <link rel="icon" id="favicon" type="image/png" href="/ucw purple .png" />
+    <link rel="apple-touch-icon" id="apple-touch-icon" href="/ucw purple .png" />
     
     <script>
-      // Set favicon based on theme preference
+      // Set favicon based on theme preference with aggressive cache busting
       function setFavicon() {
-        const favicon = document.getElementById('favicon');
-        const appleTouchIcon = document.getElementById('apple-touch-icon');
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const timestamp = new Date().getTime();
+        
+        // Remove existing favicons
+        const existingFavicons = document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]');
+        existingFavicons.forEach(link => link.remove());
+        
+        // Create new favicon elements
+        const favicon = document.createElement('link');
+        const appleTouchIcon = document.createElement('link');
+        
+        favicon.rel = 'icon';
+        favicon.type = 'image/png';
+        favicon.id = 'favicon';
+        
+        appleTouchIcon.rel = 'apple-touch-icon';
+        appleTouchIcon.id = 'apple-touch-icon';
         
         if (prefersDark) {
-          // Dark theme - use white icon
-          favicon.href = '/ucw.png';
-          appleTouchIcon.href = '/ucw.png';
+          // Dark theme - use cream icon
+          favicon.href = `/ucw cream.png?v=${timestamp}`;
+          appleTouchIcon.href = `/ucw cream.png?v=${timestamp}`;
         } else {
-          // Light theme - use black icon
-          favicon.href = '/ucw black.png';
-          appleTouchIcon.href = '/ucw black.png';
+          // Light theme - use purple icon  
+          favicon.href = `/ucw purple .png?v=${timestamp}`;
+          appleTouchIcon.href = `/ucw purple .png?v=${timestamp}`;
         }
+        
+        // Add new favicons to head
+        document.head.appendChild(favicon);
+        document.head.appendChild(appleTouchIcon);
       }
       
       // Set favicon on load
-      setFavicon();
+      document.addEventListener('DOMContentLoaded', setFavicon);
       
       // Listen for theme changes
-      window.matchMedia('(prefers-color-scheme: dark)').addListener(setFavicon);
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
+      
+      // Force immediate execution for testing
+      setFavicon();
     </script>
     
     <!-- Open Graph / Facebook -->
