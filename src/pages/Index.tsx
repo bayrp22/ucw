@@ -530,7 +530,7 @@ const Index = () => {
                 <div
                   key={index}
                   className={`absolute inset-0 flex flex-col items-center transition-opacity duration-500 ${
-                    index === currentTestimonialIndex ? 'opacity-100' : 'opacity-0'
+                    index === currentTestimonialIndex ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
                   }`}
                 >
                   <div 
@@ -539,8 +539,13 @@ const Index = () => {
                       backgroundImage: `url('${testimonial.image}')`
                     }}
                     onClick={() => {
+                      console.log('Clicked on:', testimonial.author, 'Link:', testimonial.link);
                       if (testimonial.link && testimonial.link !== '#') {
-                        window.open(testimonial.link, '_blank');
+                        console.log('Attempting to open:', testimonial.link);
+                        const opened = window.open(testimonial.link, '_blank');
+                        console.log('Window opened?', opened ? 'Yes' : 'Blocked by popup blocker');
+                      } else {
+                        console.log('No valid link to open');
                       }
                     }}
                   >
