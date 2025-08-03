@@ -255,12 +255,17 @@ const Index = () => {
       <main className="flex flex-col items-center justify-center px-6 py-12">
         {/* Central rectangle div - responsive size with aspect ratio */}
         <div 
-          className="w-[75vw] max-w-6xl rounded-3xl mb-8 aspect-[16/9] max-h-[60vh] bg-cover bg-center bg-no-repeat shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300"
-          style={{
-            backgroundImage: "url('/UCW placeholder hero image .jpg')"
-          }}
+          className="w-[75vw] max-w-6xl rounded-3xl mb-8 aspect-[16/9] max-h-[60vh] shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 overflow-hidden"
           onClick={scrollToTestimonials}
         >
+          <img 
+            src="/UCW placeholder hero image .jpg" 
+            alt="Beautiful Cabo wedding venue"
+            className="w-full h-full object-cover"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
         </div>
 
         {/* Headline and CTA */}
@@ -308,6 +313,8 @@ const Index = () => {
                       src={venue.image} 
                       alt={venue.name} 
                       className="max-w-full max-h-full object-contain group-hover:opacity-80 transition-opacity duration-200"
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <span className="text-sm md:text-base font-light text-muted-foreground text-center group-hover:text-foreground transition-colors duration-200">{venue.name}</span>
@@ -318,151 +325,30 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Client Timeline Section */}
+      {/* Simple Text Section */}
       <section id="process-section" className="py-20 px-6 bg-gradient-to-b from-background to-muted/20">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal mb-4 text-foreground tracking-wide">
-              WHAT'S NEXT?
-            </h2>
-            <div className="w-24 h-1 bg-foreground/20 mx-auto"></div>
-          </div>
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-normal mb-8 text-foreground tracking-wide">
+            Dreaming of a Cabo Wedding but Feeling Overwhelmed?
+          </h2>
           
-          {/* Mobile Layout */}
-          <div className="md:hidden relative">
-            {/* Connecting line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-foreground/20 via-foreground/40 to-foreground/20"></div>
-            
-            <div className="space-y-8">
-              {/* Step 1 */}
-              <div className="flex items-center gap-4 relative">
-                <div className="w-1/2 text-right pr-3">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-muted/30 text-center">
-                    <h3 className="text-lg font-normal text-foreground mb-2">
-                      Share Your Vision
-                    </h3>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                      (However Abstract)
-                    </p>
-                  </div>
-                </div>
-                <div className="flex-shrink-0 w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-lg shadow-lg z-10 border-3 border-background">
-                  1
-                </div>
-                <div className="w-1/2 pl-3"></div>
-              </div>
-              
-              {/* Step 2 */}
-              <div className="flex items-center gap-4 relative">
-                <div className="w-1/2 pr-3"></div>
-                <div className="flex-shrink-0 w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-lg shadow-lg z-10 border-3 border-background">
-                  2
-                </div>
-                <div className="w-1/2 text-left pl-3">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-muted/30 text-center">
-                    <h3 className="text-lg font-normal text-foreground mb-2">
-                      We Bring it to Life
-                    </h3>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                      Professional planning and execution
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 3 */}
-              <div className="flex items-center gap-4 relative">
-                <div className="w-1/2 text-right pr-3">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 shadow-lg border border-muted/30 text-center">
-                    <h3 className="text-lg font-normal text-foreground mb-2">
-                      Celebrate Your Day
-                    </h3>
-                    <p className="text-sm text-muted-foreground font-light leading-relaxed">
-                      Stress free and present
-                    </p>
-                  </div>
-                </div>
-                <div className="flex-shrink-0 w-12 h-12 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-lg shadow-lg z-10 border-3 border-background">
-                  3
-                </div>
-                <div className="w-1/2 pl-3"></div>
-              </div>
-            </div>
-          </div>
-
-          {/* Desktop Layout */}
-          <div className="hidden md:block relative">
-            {/* Connecting line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-gradient-to-b from-foreground/20 via-foreground/40 to-foreground/20"></div>
-            
-            <div className="space-y-20">
-              {/* Step 1 */}
-              <div className="flex flex-row items-center gap-8 relative">
-                <div className="w-1/2 text-right pr-12">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-muted/30 text-center">
-                    <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">
-                      Share Your Vision
-                    </h3>
-                    <p className="text-muted-foreground font-light leading-relaxed">
-                      (However Abstract)
-                    </p>
-                  </div>
-                </div>
-                <div className="flex-shrink-0 w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-xl shadow-lg z-10 border-4 border-background">
-                  1
-                </div>
-                <div className="w-1/2 pl-12"></div>
-              </div>
-              
-              {/* Step 2 */}
-              <div className="flex flex-row items-center gap-8 relative">
-                <div className="w-1/2 pr-12"></div>
-                <div className="flex-shrink-0 w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-xl shadow-lg z-10 border-4 border-background">
-                  2
-                </div>
-                <div className="w-1/2 text-left pl-12">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-muted/30 text-center">
-                    <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">
-                      We Bring it to Life
-                    </h3>
-                    <p className="text-muted-foreground font-light leading-relaxed">
-                      Professional planning and execution
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 3 */}
-              <div className="flex flex-row items-center gap-8 relative">
-                <div className="w-1/2 text-right pr-12">
-                  <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-lg border border-muted/30 text-center">
-                    <h3 className="text-xl md:text-2xl font-normal text-foreground mb-3">
-                      Celebrate Your Day
-                    </h3>
-                    <p className="text-muted-foreground font-light leading-relaxed">
-                      Stress free and present
-                    </p>
-                  </div>
-                </div>
-                <div className="flex-shrink-0 w-16 h-16 bg-foreground text-background rounded-full flex items-center justify-center font-semibold text-xl shadow-lg z-10 border-4 border-background">
-                  3
-                </div>
-                <div className="w-1/2 pl-12"></div>
-              </div>
-            </div>
-          </div>
-          
-          <div className="text-center mt-20">
-            <p className="text-xl md:text-2xl lg:text-3xl font-normal text-foreground mb-8 italic">
-              It's That Easy!
+          <div className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-12 max-w-3xl mx-auto">
+            <p className="mb-6">
+              Planning a wedding in a beautiful destination like Cabo can feel like a dream, but it often comes with challenges. Have you started your planning process only to find that hotels and vendors seem overwhelming? Are you worried about unclear costs or finding the right fit for your budget?
             </p>
             
+            <p>
+              We understand these concerns. Our goal at Unique Cabo Weddings is to guide you through every step, offering clarity and peace of mind. Let us help turn your vision into reality with transparency and expert support.
+            </p>
+          </div>
+          
+          <div className="text-center">
             <Button 
               size="lg" 
               className="text-lg px-10 py-6 rounded-full font-light shadow-lg hover:shadow-xl transition-all duration-300"
               onClick={scrollToContact}
             >
-              Bring Your Vision to Life
+              No more second-guessing, schedule a call!
             </Button>
           </div>
         </div>
@@ -534,10 +420,7 @@ const Index = () => {
                   }`}
                 >
                   <div 
-                    className="w-4/5 max-w-md aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden bg-cover bg-center"
-                    style={{
-                      backgroundImage: `url('${testimonial.image}')`
-                    }}
+                    className="w-4/5 max-w-md aspect-square rounded-2xl mb-6 cursor-pointer hover:shadow-lg transition-shadow duration-300 overflow-hidden"
                     onClick={() => {
                       console.log('Clicked on:', testimonial.author, 'Link:', testimonial.link);
                       if (testimonial.link && testimonial.link !== '#') {
@@ -549,6 +432,13 @@ const Index = () => {
                       }
                     }}
                   >
+                    <img 
+                      src={testimonial.image} 
+                      alt={`Testimonial from ${testimonial.author}`}
+                      className="w-full h-full object-cover"
+                      loading={index === currentTestimonialIndex ? "eager" : "lazy"}
+                      decoding="async"
+                    />
                   </div>
                   <blockquote className="text-center max-w-2xl">
                     <p className="text-lg font-light text-foreground leading-relaxed italic mb-4">
