@@ -8,6 +8,7 @@ const Index = () => {
   const [selectedVenue, setSelectedVenue] = useState<string>("");
   const [customVenueName, setCustomVenueName] = useState<string>("");
   const [currentVenueIndex, setCurrentVenueIndex] = useState(0);
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const [emailCopied, setEmailCopied] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
@@ -30,6 +31,19 @@ const Index = () => {
     { name: "Esperanza", image: "/esperanza logo.png" },
   ];
 
+  // Hero carousel data
+  const heroImages = [
+    { image: "/123.jpg", alt: "Cabo wedding party" },
+    { image: "/171.jpg", alt: "Cabo wedding details" },
+    { image: "/777.jpg", alt: "Cabo wedding moments" },
+    { image: "/Ayana&Austin-Preview-16.jpg", alt: "Cabo wedding couple" },
+    { image: "/JCN202071.jpg", alt: "Cabo wedding photography" },
+    { image: "/Krista_&_Nate_JMPR.jpg", alt: "Cabo wedding venue" },
+    { image: "/Krista_&_Nate_JMPR(1).jpg", alt: "Cabo wedding reception" },
+    { image: "/ShivaniBrendin-JMPR.jpg", alt: "Cabo wedding celebration" },
+    { image: "/Shivani_Brendin-JMPR.jpg", alt: "Cabo wedding ceremony" },
+  ];
+
   // Auto-advance venue carousel - smooth continuous rotation
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,6 +52,15 @@ const Index = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  // Auto-advance hero carousel - crossfade between images
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
+    }, 3000); // Change image every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   // Testimonials data
   const testimonials = [
@@ -253,19 +276,50 @@ const Index = () => {
 
       {/* Main hero section */}
       <main className="flex flex-col items-center justify-center px-6 py-12">
-        {/* Central rectangle div - responsive size with aspect ratio */}
+        {/* Hero Image Carousel - responsive size with aspect ratio */}
         <div 
-          className="w-[75vw] max-w-6xl rounded-3xl mb-8 aspect-[16/9] max-h-[60vh] shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+          className="w-[75vw] max-w-6xl rounded-3xl mb-8 aspect-[16/9] max-h-[60vh] shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 overflow-hidden relative"
           onClick={scrollToTestimonials}
         >
-          <img 
-            src="/UCW placeholder hero image .jpg" 
-            alt="Beautiful Cabo wedding venue"
-            className="w-full h-full object-cover"
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-          />
+          {heroImages.map((hero, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 transition-opacity duration-1000 ${
+                index === currentHeroIndex ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              <img 
+                src={hero.image} 
+                alt={hero.alt}
+                className="w-full h-full object-cover"
+                loading="eager"
+                fetchPriority={index === 0 ? "high" : "low"}
+                decoding="async"
+                onLoad={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                }}
+                style={{ 
+                  opacity: 0, 
+                  transition: 'opacity 0.5s ease-in-out',
+                  ...(index === currentHeroIndex && { opacity: 1 })
+                }}
+              />
+            </div>
+          ))}
+          
+          {/* Optional: Add subtle indicators */}
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
+            {heroImages.map((_, index) => (
+              <div
+                key={index}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  index === currentHeroIndex 
+                    ? 'bg-white/80 scale-110' 
+                    : 'bg-white/40 hover:bg-white/60'
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Headline and CTA */}
