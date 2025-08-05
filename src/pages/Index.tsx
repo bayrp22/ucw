@@ -42,7 +42,7 @@ const Index = () => {
   // Testimonials data
   const testimonials = [
     {
-      image: "/UCW - Testimonial 1.png",
+      image: "/Ayana&Austin.jpg",
       quote: "We can't say enough good things about Luba and Borja at Unique Cabo Weddings! Planning a destination wedding from Texas while they were in Cabo could have been overwhelming, but they made it so easy and stress-free from the very beginning.",
       author: "Ayana & Austin",
       link: "https://www.instagram.com/p/DL8D3zcStWx/?img_index=1"
@@ -54,13 +54,13 @@ const Index = () => {
       link: "https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1"
     },
     {
-      image: "/UCW - Testimonial 1.png", // Placeholder - reusing image
+      image: "/Eli&Ashley.jpg",
       quote: "She makes sure that you are not alone, that she is there to help you and guide you, and honestly, she's someone that makes you feel like there's no such thing as a stupid question. She helps you work with your budget to find what things are most important to you and helping you achieve all the extra things you may want.",
       author: "Eli & Ashley",
       link: "#"
     },
     {
-      image: "/ucw testimonial 2.png", // Placeholder - reusing image
+      image: "/Nicole&Chris.png",
       quote: "Luba was an absolute dream wedding planner! From start to finish, she poured her heart and soul into creating the most magical weekend for my husband and me. Her attention to detail was impeccable, and her genuine care and love shone through in every aspect of the planning process.",
       author: "Nicole & Chris",
       link: "#"
@@ -308,13 +308,17 @@ const Index = () => {
                   className="flex-shrink-0 w-1/5 flex flex-col items-center px-2 md:px-4 cursor-pointer group"
                   onClick={() => handleVenueClick(venue.name)}
                 >
-                  <div className="w-20 h-16 md:w-32 md:h-24 flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-105">
+                  <div className="w-20 h-16 md:w-32 md:h-24 flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-105 bg-muted/20 rounded">
                     <img 
                       src={venue.image} 
                       alt={venue.name} 
                       className="max-w-full max-h-full object-contain group-hover:opacity-80 transition-opacity duration-200"
-                      loading="lazy"
+                      loading="eager"
                       decoding="async"
+                      onLoad={(e) => {
+                        e.currentTarget.style.opacity = '1';
+                      }}
+                      style={{ opacity: 0, transition: 'opacity 0.3s ease-in-out' }}
                     />
                   </div>
                   <span className="text-sm md:text-base font-light text-muted-foreground text-center group-hover:text-foreground transition-colors duration-200">{venue.name}</span>
@@ -332,13 +336,13 @@ const Index = () => {
             Dreaming of a Cabo Wedding but Feeling Overwhelmed?
           </h2>
           
-          <div className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed mb-12 max-w-3xl mx-auto">
-            <p className="mb-6">
-              Planning a wedding in a beautiful destination like Cabo can feel like a dream, but it often comes with challenges. Have you started your planning process only to find that hotels and vendors seem overwhelming? Are you worried about unclear costs or finding the right fit for your budget?
+          <div className="text-xl md:text-2xl text-foreground font-light leading-loose mb-12 max-w-3xl mx-auto">
+            <p className="mb-8">
+              Planning a wedding in a beautiful destination like Cabo can feel like a dream, but it often comes with challenges. <span className="font-semibold">Have you started your planning process only to find that hotels and vendors seem overwhelming?</span> Are you worried about unclear costs or finding the right fit for your budget?
             </p>
             
             <p>
-              We understand these concerns. Our goal at Unique Cabo Weddings is to guide you through every step, offering clarity and peace of mind. Let us help turn your vision into reality with transparency and expert support.
+              We understand these concerns. <span className="font-semibold">Our goal at Unique Cabo Weddings is to guide you</span> through every step, offering clarity and peace of mind. Let us help turn your vision into reality with transparency and expert support.
             </p>
           </div>
           
@@ -396,21 +400,21 @@ const Index = () => {
               onTouchMove={onTouchMove}
               onTouchEnd={onTouchEnd}
             >
-              {/* Navigation Buttons - Hidden on mobile, visible on tablet+ */}
+              {/* Navigation Buttons - Now visible on all screen sizes */}
               <button
                 onClick={prevTestimonial}
-                className="hidden md:block absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors z-10 shadow-lg"
+                className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors z-10 shadow-lg"
                 title="Previous Testimonial"
               >
-                <ChevronLeft className="w-6 h-6" />
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
               
               <button
                 onClick={nextTestimonial}
-                className="hidden md:block absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors z-10 shadow-lg"
+                className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full bg-foreground/10 hover:bg-foreground/20 text-foreground transition-colors z-10 shadow-lg"
                 title="Next Testimonial"
               >
-                <ChevronRight className="w-6 h-6" />
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
               {testimonials.map((testimonial, index) => (
                 <div
