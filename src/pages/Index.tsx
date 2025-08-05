@@ -14,6 +14,8 @@ const Index = () => {
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [imageViewerOpen, setImageViewerOpen] = useState(false);
+  const [viewerImageIndex, setViewerImageIndex] = useState(0);
 
   // Venue data for carousel
   const venues = [
@@ -169,6 +171,49 @@ const Index = () => {
     }
   };
 
+  // Image viewer functions
+  const openImageViewer = (index: number) => {
+    setViewerImageIndex(index);
+    setImageViewerOpen(true);
+  };
+
+  const closeImageViewer = () => {
+    setImageViewerOpen(false);
+  };
+
+  const navigateViewer = (direction: 'prev' | 'next') => {
+    if (direction === 'prev') {
+      setViewerImageIndex((prev) => prev === 0 ? heroImages.length - 1 : prev - 1);
+    } else {
+      setViewerImageIndex((prev) => (prev + 1) % heroImages.length);
+    }
+  };
+
+  // Handle keyboard navigation in viewer
+  const handleViewerKeyPress = (e: KeyboardEvent) => {
+    if (!imageViewerOpen) return;
+    
+    if (e.key === 'Escape') {
+      closeImageViewer();
+    } else if (e.key === 'ArrowLeft') {
+      navigateViewer('prev');
+    } else if (e.key === 'ArrowRight') {
+      navigateViewer('next');
+    }
+  };
+
+  // Add keyboard event listener for viewer and prevent body scroll
+  useEffect(() => {
+    if (imageViewerOpen) {
+      document.addEventListener('keydown', handleViewerKeyPress);
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.removeEventListener('keydown', handleViewerKeyPress);
+        document.body.style.overflow = 'unset';
+      };
+    }
+  }, [imageViewerOpen]);
+
   // Function to convert venue names to form values
   const getVenueFormValue = (venueName: string): string => {
     const venueMap: { [key: string]: string } = {
@@ -293,7 +338,7 @@ const Index = () => {
         {/* Hero Image Carousel - responsive size with aspect ratio */}
         <div 
           className="w-[75vw] max-w-6xl rounded-3xl mb-8 aspect-[16/9] max-h-[60vh] shadow-lg cursor-pointer hover:shadow-xl transition-shadow duration-300 overflow-hidden relative"
-          onClick={scrollToTestimonials}
+          onClick={() => openImageViewer(currentHeroIndex)}
         >
           {heroImages.map((hero, index) => {
             const isLoaded = heroImagesLoaded.has(index);
@@ -870,6 +915,73 @@ const Index = () => {
           </div>
       </div>
       </section>
+
+      {/* Full Screen Image Viewer Modal */}
+      {imageViewerOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/20 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in-0 duration-300"
+          onClick={closeImageViewer}
+        >
+          {/* Close button */}
+          <button
+            onClick={closeImageViewer}
+            className="absolute top-4 right-4 z-60 text-white/90 hover:text-white transition-all duration-200 p-2 hover:bg-black/30 backdrop-blur-sm rounded-full border border-white/20"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+
+          {/* Navigation buttons */}
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigateViewer('prev');
+            }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 z-60 text-white/90 hover:text-white transition-all duration-200 p-3 hover:bg-black/30 backdrop-blur-sm rounded-full border border-white/20"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              navigateViewer('next');
+            }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 z-60 text-white/90 hover:text-white transition-all duration-200 p-3 hover:bg-black/30 backdrop-blur-sm rounded-full border border-white/20"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+
+          {/* Image container */}
+          <div 
+            className="relative max-w-[90vw] max-h-[90vh] flex items-center justify-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={heroImages[viewerImageIndex].image}
+              alt={heroImages[viewerImageIndex].alt}
+              className="max-w-full max-h-full object-contain rounded-lg shadow-2xl transition-opacity duration-300"
+              style={{ maxHeight: 'calc(100vh - 8rem)' }}
+              onLoad={(e) => {
+                e.currentTarget.style.opacity = '1';
+              }}
+              onLoadStart={(e) => {
+                e.currentTarget.style.opacity = '0.5';
+              }}
+            />
+          </div>
+
+          {/* Image counter */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm bg-black/70 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
+            {viewerImageIndex + 1} / {heroImages.length}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
