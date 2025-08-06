@@ -81,25 +81,25 @@ const Index = () => {
   // Testimonials data
   const testimonials = [
     {
-      image: "/Ayana&Austin.jpg",
-      quote: "We can't say enough good things about Luba and Borja at Unique Cabo Weddings! Planning a destination wedding from Texas while they were in Cabo could have been overwhelming, but they made it so easy and stress-free from the very beginning.",
-      author: "Ayana & Austin",
-      link: "https://www.instagram.com/p/DL8D3zcStWx/?img_index=1"
-    },
-    {
       image: "/ucw testimonial 2.png",
       quote: "We had started planning on our own for a few months before meeting her, but once we started working together she made the whole process feel much less intimidating. Luba worked incredibly hard to make the wedding planning as stress-free as possible and the day-of go as smoothly as it did.",
       author: "Victoria & Patrick",
       link: "https://www.instagram.com/p/DAbkLrsRdA6/?img_index=1"
     },
     {
-      image: "/Eli&Ashley.jpg",
+      image: "/Ayana&Austin.jpg",
+      quote: "We can't say enough good things about Luba and Borja at Unique Cabo Weddings! Planning a destination wedding from Texas while they were in Cabo could have been overwhelming, but they made it so easy and stress-free from the very beginning.",
+      author: "Ayana & Austin",
+      link: "https://www.instagram.com/p/DL8D3zcStWx/?img_index=1"
+    },
+    {
+      image: "/Nicole&Chris.png",
       quote: "She makes sure that you are not alone, that she is there to help you and guide you, and honestly, she's someone that makes you feel like there's no such thing as a stupid question. She helps you work with your budget to find what things are most important to you and helping you achieve all the extra things you may want.",
       author: "Eli & Ashley",
       link: "#"
     },
     {
-      image: "/Nicole&Chris.png",
+      image: "/Eli&Ashley.jpg",
       quote: "Luba was an absolute dream wedding planner! From start to finish, she poured her heart and soul into creating the most magical weekend for my husband and me. Her attention to detail was impeccable, and her genuine care and love shone through in every aspect of the planning process.",
       author: "Nicole & Chris",
       link: "#"
