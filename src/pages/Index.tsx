@@ -256,6 +256,38 @@ const Index = () => {
       console.error('Failed to copy email:', err);
     }
   };
+
+  useEffect(() => {
+    const img = document.querySelector('link[rel="icon"][href*="ucw purple .png"]');
+    if (img && !img.getAttribute('href')?.includes('?v=')) {
+      img.setAttribute('href', img.getAttribute('href') + '?v=' + Date.now());
+    }
+  }, [mobileMenuOpen]);
+
+  // Populate hidden form fields and set up GTM tracking
+  useEffect(() => {
+    const qp = new URLSearchParams(location.search);
+    const set = (n: string, v: string | null) => { 
+      const el = document.querySelector(`input[name="${n}"]`) as HTMLInputElement; 
+      if (el) el.value = v || ""; 
+    };
+    ["utm_source","utm_medium","utm_campaign","utm_term","utm_content","gclid","fbclid"].forEach(k => set(k, qp.get(k)));
+    set("referrer_path", document.referrer || "");
+
+    // Basic GTM event on submit
+    const form = document.querySelector('form[name="contact"]') as HTMLFormElement;
+    if (form) {
+      const handleSubmit = () => {
+        // @ts-ignore - dataLayer might not exist
+        window.dataLayer = window.dataLayer || [];
+        // @ts-ignore
+        window.dataLayer.push({ event: 'form_submit', form_id: form.id || 'contact' });
+      };
+      form.addEventListener('submit', handleSubmit);
+      return () => form.removeEventListener('submit', handleSubmit);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Responsive Header */}
@@ -359,12 +391,14 @@ const Index = () => {
                 )}
                 
                 <img 
-                  src={hero.image} 
+                  src={index === 0 ? "/images/hero.avif" : hero.image} 
                   alt={hero.alt}
+                  width="1600"
+                  height="900"
                   className={`w-full h-full object-cover transition-opacity duration-500 ${
                     isLoaded ? 'opacity-100' : 'opacity-0'
                   }`}
-                  loading={index <= 2 ? "eager" : "lazy"}
+                  loading={index === 0 ? "eager" : "lazy"}
                   fetchPriority={index === 0 ? "high" : "low"}
                   decoding="async"
                   style={{ 
@@ -766,6 +800,16 @@ const Index = () => {
                     Don't fill this out if you're human: <input name="bot-field" />
                   </label>
                 </div>
+                
+                {/* Hidden attribution fields */}
+                <input type="hidden" name="utm_source"/>
+                <input type="hidden" name="utm_medium"/>
+                <input type="hidden" name="utm_campaign"/>
+                <input type="hidden" name="utm_term"/>
+                <input type="hidden" name="utm_content"/>
+                <input type="hidden" name="gclid"/>
+                <input type="hidden" name="fbclid"/>
+                <input type="hidden" name="referrer_path"/>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <input

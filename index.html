@@ -1,90 +1,176 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cabo Destination Weddings</title>
-    <meta name="description" content="Plan your dream destination wedding in Cabo San Lucas with expert local wedding planners. From beachfront venues to luxury resorts, we create unforgettable Cabo weddings.">
-    
-    <!-- Favicon - Dynamic theme support -->
-    <link rel="icon" id="favicon" type="image/png" href="/ucw purple .png" />
-    <link rel="apple-touch-icon" id="apple-touch-icon" href="/ucw purple .png" />
-    
-    <script>
-      // Set favicon based on theme preference with aggressive cache busting
-      function setFavicon() {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const timestamp = new Date().getTime();
-        
-        // Remove existing favicons
-        const existingFavicons = document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]');
-        existingFavicons.forEach(link => link.remove());
-        
-        // Create new favicon elements
-        const favicon = document.createElement('link');
-        const appleTouchIcon = document.createElement('link');
-        
-        favicon.rel = 'icon';
-        favicon.type = 'image/png';
-        favicon.id = 'favicon';
-        
-        appleTouchIcon.rel = 'apple-touch-icon';
-        appleTouchIcon.id = 'apple-touch-icon';
-        
-        if (prefersDark) {
-          // Dark theme - use cream icon
-          favicon.href = `/ucw cream.png?v=${timestamp}`;
-          appleTouchIcon.href = `/ucw cream.png?v=${timestamp}`;
-        } else {
-          // Light theme - use purple icon  
-          favicon.href = `/ucw purple .png?v=${timestamp}`;
-          appleTouchIcon.href = `/ucw purple .png?v=${timestamp}`;
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Cabo Wedding Planner | Unique Cabo Weddings</title>
+  <meta name="description" content="Local Cabo wedding planners for destination weddings across Baja California Sur. Venues, vendors, design, and day‑of coordination. Book a free consultation." />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+
+  <!-- Canonical + hreflang -->
+  <link rel="canonical" href="https://caboweddingplanner.love/" />
+  <link rel="alternate" hreflang="en" href="https://caboweddingplanner.love/" />
+  <link rel="alternate" hreflang="x-default" href="https://caboweddingplanner.love/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Unique Cabo Weddings" />
+  <meta property="og:url" content="https://caboweddingplanner.love/" />
+  <meta property="og:title" content="Your Cabo Wedding Starts Here" />
+  <meta property="og:description" content="Local Cabo wedding planners for venues, vendors, design, and day‑of coordination." />
+  <meta property="og:image" content="https://caboweddingplanner.love/og/cabo-wedding-planner-og.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Your Cabo Wedding Starts Here" />
+  <meta name="twitter:description" content="Local Cabo wedding planners for venues, vendors, design, and day‑of coordination." />
+  <meta name="twitter:image" content="https://caboweddingplanner.love/og/cabo-wedding-planner-og.jpg" />
+
+  <!-- Preload LCP image + fonts -->
+  <link rel="preload" as="image" href="/images/hero.avif" fetchpriority="high" />
+  <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin />
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-MPFNR7JV');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://caboweddingplanner.love/#org",
+        "name": "Unique Cabo Weddings",
+        "url": "https://caboweddingplanner.love/",
+        "logo": "https://caboweddingplanner.love/logo.png",
+        "sameAs": ["https://www.instagram.com/UniqueCaboWeddings/"]
+      },
+      {
+        "@type": "LocalBusiness",
+        "@id": "https://caboweddingplanner.love/#local",
+        "name": "Unique Cabo Weddings",
+        "url": "https://caboweddingplanner.love/",
+        "image": "https://caboweddingplanner.love/og/cabo-wedding-planner-og.jpg",
+        "telephone": "+526241220146",
+        "email": "luba@uniquecaboweddings.com",
+        "priceRange": "$$",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "El Tezal",
+          "addressLocality": "Cabo San Lucas",
+          "addressRegion": "BCS",
+          "postalCode": "23454",
+          "addressCountry": "MX"
+        },
+        "areaServed": [
+          { "@type": "AdministrativeArea", "name": "Baja California Sur" },
+          { "@type": "City", "name": "Cabo San Lucas" },
+          { "@type": "City", "name": "San José del Cabo" },
+          { "@type": "City", "name": "Todos Santos" },
+          { "@type": "City", "name": "East Cape" },
+          { "@type": "City", "name": "La Paz" }
+        ],
+        "openingHoursSpecification": [
+          { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "00:00", "closes": "23:59" }
+        ],
+        "hoursAvailable": "By appointment",
+        "sameAs": ["https://www.instagram.com/UniqueCaboWeddings/"],
+        "department": [],
+        "knowsAbout": ["Destination weddings","Wedding planning","Vendor coordination","Day-of coordination","Venue scouting","Design & decor"]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://caboweddingplanner.love/#website",
+        "url": "https://caboweddingplanner.love/",
+        "name": "Cabo Wedding Planner | Unique Cabo Weddings",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://caboweddingplanner.love/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
         }
-        
-        // Add new favicons to head
-        document.head.appendChild(favicon);
-        document.head.appendChild(appleTouchIcon);
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://caboweddingplanner.love/" }
+        ]
+      },
+      {
+        "@type": "Service",
+        "@id": "https://caboweddingplanner.love/#service",
+        "serviceType": "Destination Wedding Planning",
+        "provider": { "@id": "https://caboweddingplanner.love/#org" },
+        "areaServed": ["Baja California Sur","Cabo San Lucas","San José del Cabo","Todos Santos","East Cape","La Paz"],
+        "description": "End‑to‑end wedding planning in Cabo and across Baja California Sur: venues, vendors, custom design, logistics, and day‑of coordination."
+      }
+    ]
+  }
+  </script>
+
+  <!-- Favicon - Dynamic theme support -->
+  <link rel="icon" id="favicon" type="image/png" href="/ucw purple .png" />
+  <link rel="apple-touch-icon" id="apple-touch-icon" href="/ucw purple .png" />
+  
+  <script>
+    // Set favicon based on theme preference with aggressive cache busting
+    function setFavicon() {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const timestamp = new Date().getTime();
+      
+      // Remove existing favicons
+      const existingFavicons = document.querySelectorAll('link[rel="icon"], link[rel="apple-touch-icon"]');
+      existingFavicons.forEach(link => link.remove());
+      
+      // Create new favicon elements
+      const favicon = document.createElement('link');
+      const appleTouchIcon = document.createElement('link');
+      
+      favicon.rel = 'icon';
+      favicon.type = 'image/png';
+      favicon.id = 'favicon';
+      
+      appleTouchIcon.rel = 'apple-touch-icon';
+      appleTouchIcon.id = 'apple-touch-icon';
+      
+      if (prefersDark) {
+        // Dark theme - use cream icon
+        favicon.href = `/ucw cream.png?v=${timestamp}`;
+        appleTouchIcon.href = `/ucw cream.png?v=${timestamp}`;
+      } else {
+        // Light theme - use purple icon  
+        favicon.href = `/ucw purple .png?v=${timestamp}`;
+        appleTouchIcon.href = `/ucw purple .png?v=${timestamp}`;
       }
       
-      // Set favicon on load
-      document.addEventListener('DOMContentLoaded', setFavicon);
-      
-      // Listen for theme changes
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
-      
-      // Force immediate execution for testing
-      setFavicon();
-    </script>
+      // Add new favicons to head
+      document.head.appendChild(favicon);
+      document.head.appendChild(appleTouchIcon);
+    }
     
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://uniquecaboweddings.com/">
-    <meta property="og:title" content="Cabo Destination Weddings - Your Dream Wedding Starts Here">
-    <meta property="og:description" content="Plan your dream destination wedding in Cabo San Lucas with expert local wedding planners. From beachfront venues to luxury resorts, we create unforgettable Cabo weddings.">
-    <meta property="og:image" content="https://uniquecaboweddings.com/UCW%20placeholder%20hero%20image%20.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:site_name" content="Unique Cabo Weddings">
+    // Set favicon on load
+    document.addEventListener('DOMContentLoaded', setFavicon);
     
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://uniquecaboweddings.com/">
-    <meta property="twitter:title" content="Cabo Destination Weddings - Your Dream Wedding Starts Here">
-    <meta property="twitter:description" content="Plan your dream destination wedding in Cabo San Lucas with expert local wedding planners. From beachfront venues to luxury resorts, we create unforgettable Cabo weddings.">
-    <meta property="twitter:image" content="https://uniquecaboweddings.com/UCW%20placeholder%20hero%20image%20.jpg">
+    // Listen for theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', setFavicon);
     
-    <!-- Additional SEO Meta Tags -->
-    <meta name="keywords" content="Cabo weddings, destination weddings, Cabo San Lucas weddings, Mexico wedding planner, beach weddings, luxury weddings, wedding venues Cabo">
-    <meta name="author" content="Unique Cabo Weddings">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://uniquecaboweddings.com/">
-    
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#e11d48">
-  </head>
+    // Force immediate execution for testing
+    setFavicon();
+  </script>
   
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#e11d48">
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MPFNR7JV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
 </html>
