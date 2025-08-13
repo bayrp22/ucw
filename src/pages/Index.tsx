@@ -17,6 +17,8 @@ const Index = () => {
   const [imageViewerOpen, setImageViewerOpen] = useState(false);
   const [viewerImageIndex, setViewerImageIndex] = useState(0);
   const [carouselPaused, setCarouselPaused] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Venue data for carousel
   const venues = [
@@ -278,6 +280,35 @@ const Index = () => {
       setTimeout(() => setEmailCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy email:', err);
+    }
+  };
+
+  // Handle form submission
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      // Submit to Netlify
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(formData as any).toString(),
+      });
+
+      // Show success state
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setFormSubmitted(true);
+      }, 1000);
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setIsSubmitting(false);
+      // Fallback to default Netlify handling
+      form.submit();
     }
   };
 
@@ -807,13 +838,15 @@ const Index = () => {
             
             {/* Mobile: Form First, Desktop: Form Right */}
             <div className="bg-slate-800 rounded-2xl p-8 order-1 lg:order-2">
-              <form 
+              {!formSubmitted ? (
+                <form 
                 name="contact" 
                 method="POST" 
                 action="/success"
                 data-netlify="true"
                 data-netlify-honeypot="bot-field"
                 className="space-y-6"
+                onSubmit={handleFormSubmit}
               >
                 {/* Hidden field for Netlify */}
                 <input type="hidden" name="form-name" value="contact" />
@@ -974,11 +1007,47 @@ const Index = () => {
                 
                 <Button 
                   type="submit"
-                  className="w-full py-4 text-lg font-light bg-background text-foreground hover:bg-background/90 rounded-lg transition-colors"
+                  disabled={isSubmitting}
+                  className="w-full py-4 text-lg font-light bg-background text-foreground hover:bg-background/90 rounded-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </Button>
               </form>
+              ) : (
+                <div className="text-center space-y-6 py-8">
+                  {/* Thank You Message */}
+                  <div className="mb-6">
+                    <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-normal text-background mb-2">Thank You!</h3>
+                    <p className="text-background/80 text-lg">
+                      Your message has been sent successfully. <br /> We'll get right back to you to discuss your dream Cabo wedding.
+                    </p>
+                    
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <Button 
+                      onClick={() => {
+                        setFormSubmitted(false);
+                        // Scroll to top smoothly
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                      }}
+                      className="w-full py-3 text-lg font-light bg-background text-foreground hover:bg-background/90 rounded-lg transition-colors"
+                    >
+                      Return to Top
+                    </Button>
+                    
+                    <div className="text-background/60 text-sm">
+                      <p>Need immediate assistance?</p>
+                      <p className="font-light">Call us at +52 (624) 122 0146</p>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
       </div>
