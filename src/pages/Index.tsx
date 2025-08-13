@@ -20,7 +20,7 @@ const Index = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Ensure hero carousel starts at index 0 - Force correct initial state
+  // Initialize hero carousel at index 0
   useEffect(() => {
     setCurrentHeroIndex(0);
   }, []);
@@ -62,12 +62,11 @@ const Index = () => {
 
   // OPTIMIZED: Progressive image loading for better performance
   useEffect(() => {
-    // Load first image immediately for LCP (Largest Contentful Paint) - Fixed ordering
+    // CRITICAL: Load first image immediately and mark as loaded instantly for immediate display
+    setHeroImagesLoaded(prev => new Set(prev).add(0)); // Mark as loaded immediately
+    
     const firstImg = new Image();
-    firstImg.onload = () => {
-      setHeroImagesLoaded(prev => new Set(prev).add(0));
-    };
-    firstImg.src = "/hero-1.jpg";
+    firstImg.src = "/hero-1.jpg"; // Start loading in background
 
     // Progressive loading: Load next images after a delay (optimized for 5 images)
     const loadProgressively = () => {
@@ -100,18 +99,12 @@ const Index = () => {
   useEffect(() => {
     if (!heroImagesLoaded.has(0) || carouselPaused) return; // Wait for first image to load and check if paused
     
-    // Ensure we start from index 0 (hero-1.jpg)
-    if (currentHeroIndex !== 0) {
-      setCurrentHeroIndex(0);
-      return;
-    }
-    
     const interval = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
     }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval);
-  }, [heroImages.length, heroImagesLoaded, carouselPaused, currentHeroIndex]);
+  }, [heroImages.length, heroImagesLoaded, carouselPaused]);
 
   // Testimonials data
   const testimonials = [
@@ -441,16 +434,18 @@ const Index = () => {
           {heroImages.map((hero, index) => {
             const isLoaded = heroImagesLoaded.has(index);
             const isCurrent = index === currentHeroIndex;
+            // Show first image immediately, others only when loaded
+            const shouldShow = index === 0 ? isCurrent : (isCurrent && isLoaded);
             
             return (
               <div
                 key={index}
                 className={`absolute inset-0 transition-opacity duration-1000 ${
-                  isCurrent && isLoaded ? 'opacity-100' : 'opacity-0'
+                  shouldShow ? 'opacity-100' : 'opacity-0'
                 }`}
               >
-                {/* Show skeleton/placeholder while loading */}
-                {!isLoaded && isCurrent && (
+                {/* Show skeleton/placeholder while loading (except for first image) */}
+                {!isLoaded && isCurrent && index !== 0 && (
                   <div className="w-full h-full bg-gradient-to-br from-muted/20 to-muted/40 animate-pulse flex items-center justify-center">
                     <div className="text-muted-foreground/60 text-lg font-light">Loading...</div>
                   </div>
