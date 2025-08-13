@@ -105,4 +105,15 @@ All colors MUST be HSL.
     @apply bg-background text-foreground;
     font-family: 'Montserrat', sans-serif;
   }
+
+  /* Hide number input spinners for clean form design */
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
 }

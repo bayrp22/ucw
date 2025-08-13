@@ -959,9 +959,9 @@ const Index = () => {
                 )}
                 
                 <input
-                  type="number"
+                  type="text"
                   name="guest-count"
-                  placeholder="Number of Guests"
+                  placeholder="Number of Guests (e.g., 50, 40-50, approximately 60)"
                   className="w-full px-4 py-3 bg-slate-700 text-background rounded-lg border border-slate-600 focus:border-slate-400 focus:outline-none placeholder-slate-400"
                 />
                 
