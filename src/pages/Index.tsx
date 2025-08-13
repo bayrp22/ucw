@@ -16,6 +16,7 @@ const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [imageViewerOpen, setImageViewerOpen] = useState(false);
   const [viewerImageIndex, setViewerImageIndex] = useState(0);
+  const [carouselPaused, setCarouselPaused] = useState(false);
 
   // Venue data for carousel
   const venues = [
@@ -90,14 +91,14 @@ const Index = () => {
 
   // Auto-advance hero carousel - crossfade between images (only start after first image loads)
   useEffect(() => {
-    if (!heroImagesLoaded.has(0)) return; // Wait for first image to load
+    if (!heroImagesLoaded.has(0) || carouselPaused) return; // Wait for first image to load and check if paused
     
     const interval = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
     }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval);
-  }, [heroImages.length, heroImagesLoaded]);
+  }, [heroImages.length, heroImagesLoaded, carouselPaused]);
 
   // Testimonials data
   const testimonials = [
@@ -196,10 +197,12 @@ const Index = () => {
   const openImageViewer = (index: number) => {
     setViewerImageIndex(index);
     setImageViewerOpen(true);
+    setCarouselPaused(true); // Pause carousel when entering fullscreen
   };
 
   const closeImageViewer = () => {
     setImageViewerOpen(false);
+    setCarouselPaused(false); // Resume carousel when exiting fullscreen
   };
 
   const navigateViewer = (direction: 'prev' | 'next') => {
