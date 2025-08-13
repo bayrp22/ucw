@@ -56,15 +56,40 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // Preload hero images for better performance
+  // OPTIMIZED: Progressive image loading for better performance
   useEffect(() => {
-    heroImages.forEach((hero, index) => {
-      const img = new Image();
-      img.onload = () => {
-        setHeroImagesLoaded(prev => new Set(prev).add(index));
-      };
-      img.src = hero.image;
-    });
+    // Load first image immediately for LCP (Largest Contentful Paint)
+    const firstImg = new Image();
+    firstImg.onload = () => {
+      setHeroImagesLoaded(prev => new Set(prev).add(0));
+    };
+    firstImg.src = "/images/hero.avif";
+
+    // Progressive loading: Load next few images after a delay
+    const loadProgressively = () => {
+      setTimeout(() => {
+        heroImages.slice(1, 4).forEach((hero, index) => {
+          const img = new Image();
+          img.onload = () => {
+            setHeroImagesLoaded(prev => new Set(prev).add(index + 1));
+          };
+          img.src = hero.image;
+        });
+      }, 1000);
+
+      // Load remaining images after another delay
+      setTimeout(() => {
+        heroImages.slice(4).forEach((hero, index) => {
+          const img = new Image();
+          img.onload = () => {
+            setHeroImagesLoaded(prev => new Set(prev).add(index + 4));
+          };
+          img.src = hero.image;
+        });
+      }, 3000);
+    };
+
+    loadProgressively();
   }, []);
 
   // Auto-advance hero carousel - crossfade between images (only start after first image loads)
@@ -471,7 +496,7 @@ const Index = () => {
                       src={venue.image} 
                       alt={venue.name} 
                       className="max-w-full max-h-full object-contain group-hover:opacity-80 transition-opacity duration-200"
-                      loading="eager"
+                      loading="lazy"
                       decoding="async"
                       onLoad={(e) => {
                         e.currentTarget.style.opacity = '1';
@@ -598,7 +623,7 @@ const Index = () => {
                       src={testimonial.image} 
                       alt={`Testimonial from ${testimonial.author}`}
                       className="w-full h-full object-cover"
-                      loading={index === currentTestimonialIndex ? "eager" : "lazy"}
+                      loading="lazy"
                       decoding="async"
                     />
                   </div>
