@@ -1026,7 +1026,7 @@ const Index = () => {
                     <p className="text-background/80 text-lg">
                       Your message has been sent successfully. <br /> We'll get right back to you to discuss your dream Cabo wedding.
                     </p>
-                    
+
                   </div>
                   
                   <div className="space-y-4">
@@ -1042,7 +1042,7 @@ const Index = () => {
                     </Button>
                     
                     <div className="text-background/60 text-sm">
-                      <p>Need immediate assistance?</p>
+                      <p>Want to talk right now?</p>
                       <p className="font-light">Call us at +52 (624) 122 0146</p>
                     </div>
                   </div>
