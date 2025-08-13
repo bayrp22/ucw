@@ -491,7 +491,7 @@ const Index = () => {
                   className="flex-shrink-0 w-1/5 flex flex-col items-center px-2 md:px-4 cursor-pointer group"
                   onClick={() => handleVenueClick(venue.name)}
                 >
-                  <div className="w-20 h-16 md:w-32 md:h-24 flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-105 bg-muted/20 rounded">
+                  <div className="w-20 h-16 md:w-32 md:h-24 flex items-center justify-center mb-3 transition-transform duration-200 group-hover:scale-105 bg-background rounded">
                     <img 
                       src={venue.image} 
                       alt={venue.name} 
