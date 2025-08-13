@@ -446,7 +446,7 @@ const Index = () => {
                 )}
                 
                 <img 
-                  src={index === 0 ? "/hero-1.jpg" : hero.image} 
+                  src={hero.image} 
                   alt={hero.alt}
                   width="1600"
                   height="900"
@@ -674,7 +674,7 @@ const Index = () => {
               <Button 
                 variant="outline"
                 size="lg"
-                className="px-8 py-3 rounded-full font-light hover:bg-foreground hover:text-background transition-all duration-300"
+                className="px-8 py-3 rounded-full font-light bg-black text-white border-black hover:bg-purple-600 hover:border-purple-600 hover:text-white transition-all duration-300"
                 onClick={() => window.open('https://www.weddingwire.com/reviews/unique-cabo-weddings/a93ce236a1751046.html#gallery', '_blank')}
               >
                 More from our clients
@@ -693,7 +693,7 @@ const Index = () => {
           
           <Button 
             size="lg" 
-            className="text-lg px-10 py-6 rounded-full font-light shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            className="text-lg px-10 py-6 rounded-full font-light bg-purple-600 text-white border-purple-600 hover:bg-black hover:border-black hover:text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
             onClick={scrollToContact}
           >
             Get Started Today
