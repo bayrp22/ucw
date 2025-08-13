@@ -20,6 +20,11 @@ const Index = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Ensure hero carousel starts at index 0 - Force correct initial state
+  useEffect(() => {
+    setCurrentHeroIndex(0);
+  }, []);
+
   // Venue data for carousel
   const venues = [
     { name: "Corazon", image: "/ChatGPT Image Jul 12, 2025, 10_17_29 PM.png" },
@@ -57,7 +62,7 @@ const Index = () => {
 
   // OPTIMIZED: Progressive image loading for better performance
   useEffect(() => {
-    // Load first image immediately for LCP (Largest Contentful Paint)
+    // Load first image immediately for LCP (Largest Contentful Paint) - Fixed ordering
     const firstImg = new Image();
     firstImg.onload = () => {
       setHeroImagesLoaded(prev => new Set(prev).add(0));
@@ -95,12 +100,18 @@ const Index = () => {
   useEffect(() => {
     if (!heroImagesLoaded.has(0) || carouselPaused) return; // Wait for first image to load and check if paused
     
+    // Ensure we start from index 0 (hero-1.jpg)
+    if (currentHeroIndex !== 0) {
+      setCurrentHeroIndex(0);
+      return;
+    }
+    
     const interval = setInterval(() => {
       setCurrentHeroIndex((prev) => (prev + 1) % heroImages.length);
     }, 3000); // Change image every 3 seconds
 
     return () => clearInterval(interval);
-  }, [heroImages.length, heroImagesLoaded, carouselPaused]);
+  }, [heroImages.length, heroImagesLoaded, carouselPaused, currentHeroIndex]);
 
   // Testimonials data
   const testimonials = [

@@ -1,4 +1,4 @@
-# Force canonical host
+# Force canonical host - Hero image order fix v2
 [[redirects]]
   from = "https://www.caboweddingplanner.love/*"
   to   = "https://caboweddingplanner.love/:splat"
@@ -62,7 +62,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Preload critical resources
+# Preload critical resources - Updated for hero image order fix
 [[headers]]
   for = "/"
   [headers.values]
