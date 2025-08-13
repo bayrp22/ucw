@@ -66,4 +66,4 @@
 [[headers]]
   for = "/"
   [headers.values]
-    Link = '</images/hero.avif>; rel=preload; as=image; fetchpriority=high, </fonts/inter-var.woff2>; rel=preload; as=font; type=font/woff2; crossorigin' 
+    Link = '</hero-1.jpg>; rel=preload; as=image; fetchpriority=high, </fonts/inter-var.woff2>; rel=preload; as=font; type=font/woff2; crossorigin' 

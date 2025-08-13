@@ -34,17 +34,13 @@ const Index = () => {
     { name: "Esperanza", image: "/esperanza logo.png" },
   ];
 
-  // Hero carousel data
+  // Hero carousel data - Optimized for 5 images
   const heroImages = [
-    { image: "/123.jpg", alt: "Cabo wedding party" },
-    { image: "/171.jpg", alt: "Cabo wedding details" },
-    { image: "/777.jpg", alt: "Cabo wedding moments" },
-    { image: "/Ayana&Austin-Preview-16.jpg", alt: "Cabo wedding couple" },
-    { image: "/JCN202071.jpg", alt: "Cabo wedding photography" },
-    { image: "/Krista_&_Nate_JMPR.jpg", alt: "Cabo wedding venue" },
-    { image: "/Krista_&_Nate_JMPR(1).jpg", alt: "Cabo wedding reception" },
-    { image: "/ShivaniBrendin-JMPR.jpg", alt: "Cabo wedding celebration" },
-    { image: "/Shivani_Brendin-JMPR.jpg", alt: "Cabo wedding ceremony" },
+    { image: "/hero-1.jpg", alt: "Cabo wedding ceremony" },
+    { image: "/hero-2.jpg", alt: "Cabo wedding reception" },
+    { image: "/hero-3.jpg", alt: "Cabo wedding celebration" },
+    { image: "/hero-4.jpg", alt: "Cabo wedding photography" },
+    { image: "/hero-5.jpg", alt: "Cabo wedding moments" },
   ];
 
   // Auto-advance venue carousel - smooth continuous rotation
@@ -63,12 +59,12 @@ const Index = () => {
     firstImg.onload = () => {
       setHeroImagesLoaded(prev => new Set(prev).add(0));
     };
-    firstImg.src = "/images/hero.avif";
+    firstImg.src = "/hero-1.jpg";
 
-    // Progressive loading: Load next few images after a delay
+    // Progressive loading: Load next images after a delay (optimized for 5 images)
     const loadProgressively = () => {
       setTimeout(() => {
-        heroImages.slice(1, 4).forEach((hero, index) => {
+        heroImages.slice(1, 3).forEach((hero, index) => {
           const img = new Image();
           img.onload = () => {
             setHeroImagesLoaded(prev => new Set(prev).add(index + 1));
@@ -79,14 +75,14 @@ const Index = () => {
 
       // Load remaining images after another delay
       setTimeout(() => {
-        heroImages.slice(4).forEach((hero, index) => {
+        heroImages.slice(3).forEach((hero, index) => {
           const img = new Image();
           img.onload = () => {
-            setHeroImagesLoaded(prev => new Set(prev).add(index + 4));
+            setHeroImagesLoaded(prev => new Set(prev).add(index + 3));
           };
           img.src = hero.image;
         });
-      }, 3000);
+      }, 2500);
     };
 
     loadProgressively();
@@ -416,7 +412,7 @@ const Index = () => {
                 )}
                 
                 <img 
-                  src={index === 0 ? "/images/hero.avif" : hero.image} 
+                  src={index === 0 ? "/hero-1.jpg" : hero.image} 
                   alt={hero.alt}
                   width="1600"
                   height="900"
