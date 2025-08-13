@@ -42,7 +42,7 @@ const Index = () => {
     { name: "Esperanza", image: "/esperanza logo.png" },
   ];
 
-  // Hero carousel data - Optimized for 5 images
+  // Hero carousel data - Optimized for 5 images (Cache-cleared v3)
   const heroImages = [
     { image: "/hero-1.jpg", alt: "Cabo wedding ceremony" },
     { image: "/hero-2.jpg", alt: "Cabo wedding reception" },

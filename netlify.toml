@@ -1,4 +1,4 @@
-# Force canonical host - Hero image order fix v2
+# Force canonical host - Hero image order fix v3 - Cache clear
 [[redirects]]
   from = "https://www.caboweddingplanner.love/*"
   to   = "https://caboweddingplanner.love/:splat"
