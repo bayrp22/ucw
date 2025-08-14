@@ -42,13 +42,13 @@ const Index = () => {
     { name: "Esperanza", image: "/esperanza logo.png" },
   ];
 
-  // Hero carousel data - Optimized for 5 images (Cache-cleared v3)
+  // Hero carousel data - Cache-busted version
   const heroImages = [
-    { image: "/hero-1.jpg", alt: "Cabo wedding ceremony" },
-    { image: "/hero-2.jpg", alt: "Cabo wedding reception" },
-    { image: "/hero-3.jpg", alt: "Cabo wedding celebration" },
-    { image: "/hero-4.jpg", alt: "Cabo wedding photography" },
-    { image: "/hero-5.jpg", alt: "Cabo wedding moments" },
+    { image: "/hero-1.jpg?v=2", alt: "Cabo wedding ceremony" },
+    { image: "/hero-2.jpg?v=2", alt: "Cabo wedding reception" },
+    { image: "/hero-3.jpg?v=2", alt: "Cabo wedding celebration" },
+    { image: "/hero-4.jpg?v=2", alt: "Cabo wedding photography" },
+    { image: "/hero-5.jpg?v=2", alt: "Cabo wedding moments" },
   ];
 
   // Auto-advance venue carousel - smooth continuous rotation
@@ -66,7 +66,7 @@ const Index = () => {
     setHeroImagesLoaded(prev => new Set(prev).add(0)); // Mark as loaded immediately
     
     const firstImg = new Image();
-    firstImg.src = "/hero-1.jpg"; // Start loading in background
+    firstImg.src = "/hero-1.jpg?v=2"; // Start loading in background
 
     // Progressive loading: Load next images after a delay (optimized for 5 images)
     const loadProgressively = () => {
