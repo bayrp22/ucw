@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Menu, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Menu, X, HelpCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [currentTestimonialIndex, setCurrentTestimonialIndex] = useState(0); // Changed from set-based to individual testimonial index
   const [selectedVenue, setSelectedVenue] = useState<string>("");
   const [customVenueName, setCustomVenueName] = useState<string>("");
@@ -352,6 +354,15 @@ const Index = () => {
       <header className="w-full py-6 px-6">
         {/* Desktop & Tablet Navigation */}
         <div className="hidden md:block relative w-full h-16">
+          {/* Ghost Button - Left of center */}
+          <Button 
+            variant="ghost"
+            onClick={() => navigate('/faq')}
+            className="absolute left-1/2 top-1/2 -translate-y-1/2 -ml-[120px] h-8 w-8 rounded-full opacity-5 hover:opacity-100 hover:bg-purple-600 hover:text-white transition-all duration-200" 
+          >
+            <HelpCircle className="h-4 w-4" />
+          </Button>
+          
           {/* BOOK Button - Absolutely centered on page */}
           <Button 
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 px-8 py-3 font-bold bg-foreground text-background hover:bg-purple-600 hover:text-white shadow-md hover:shadow-lg transition-all duration-200 rounded-full min-w-[100px]" 
