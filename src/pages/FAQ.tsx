@@ -156,23 +156,12 @@ Beyond logistics, they go the extra mile: organizing and attending site inspecti
             </div>
           </div>
           
-          {/* Right Main Section - Master FAQ */}
+          {/* Right Main Section - FAQ Content */}
           <div className="lg:col-span-2">
             <div className="bg-card rounded-2xl p-8 shadow-sm border border-border/50">
-              <div className="text-center mb-8">
-                <div className="w-16 h-16 rounded-full bg-purple-600 text-white text-2xl font-bold flex items-center justify-center mx-auto mb-4">
-                  ?
-                </div>
-                <h1 className="text-3xl font-bold text-foreground mb-4">Master FAQ</h1>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Answer real buyer questions and rank for long-tail queries while funnelling visitors to our quote form. 
-                  Find answers to common questions about our wedding planning and coordination services in Cabo.
-                </p>
-              </div>
-              
               <div className="min-h-[400px]">
                 {expandedQuestion >= 0 && faqData[expandedQuestion] && (
-                  <div className="border border-border/30 rounded-xl overflow-hidden">
+                  <div className="rounded-xl overflow-hidden">
                     <div className="p-6">
                       <div className="flex items-center gap-4 mb-6">
                         <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-600 text-white text-xl font-semibold flex items-center justify-center">
