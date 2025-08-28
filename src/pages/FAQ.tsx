@@ -4,7 +4,7 @@ import { ArrowLeft, MessageCircle, Rocket, CheckCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const FAQ = () => {
-  const [expandedQuestion, setExpandedQuestion] = useState(0);
+  const [expandedQuestion, setExpandedQuestion] = useState(0); // Start with first question expanded
   const navigate = useNavigate();
 
   const faqData = [
@@ -170,53 +170,53 @@ Beyond logistics, they go the extra mile: organizing and attending site inspecti
                 </p>
               </div>
               
-              <div className="space-y-6">
-                {faqData.map((item, index) => (
-                  <div key={item.id} className="border border-border/30 rounded-xl overflow-hidden">
-                    <button
-                      onClick={() => toggleQuestion(item.id)}
-                      className="w-full text-left p-6 hover:bg-accent/30 transition-colors duration-200"
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-600 text-white text-lg font-semibold flex items-center justify-center">
-                          {index + 1}
+              <div className="min-h-[400px]">
+                {expandedQuestion >= 0 && faqData[expandedQuestion] && (
+                  <div className="border border-border/30 rounded-xl overflow-hidden">
+                    <div className="p-6">
+                      <div className="flex items-center gap-4 mb-6">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-full bg-purple-600 text-white text-xl font-semibold flex items-center justify-center">
+                          {expandedQuestion + 1}
                         </div>
-                        <h3 className="text-lg font-semibold text-foreground flex-1">{item.question}</h3>
-                        <div className={`transform transition-transform duration-200 ${expandedQuestion === item.id ? 'rotate-180' : ''}`}>
-                          <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
+                        <h3 className="text-2xl font-semibold text-foreground flex-1">
+                          {faqData[expandedQuestion].question}
+                        </h3>
+                      </div>
+                      
+                      <div className="prose prose-lg max-w-none">
+                        <div className="text-muted-foreground leading-relaxed whitespace-pre-line text-base">
+                          {faqData[expandedQuestion].answer}
                         </div>
                       </div>
-                    </button>
-                    
-                    {expandedQuestion === item.id && (
-                      <div className="px-6 pb-6 border-t border-border/30">
-                        <div className="pt-4 prose prose-sm max-w-none">
-                          <div className="text-muted-foreground leading-relaxed whitespace-pre-line">
-                            {item.answer}
-                          </div>
-                        </div>
-                        
-                        <div className="mt-6 flex items-center gap-4 pt-4 border-t border-border/20">
-                          <Button 
-                            variant="outline" 
-                            className="text-sm"
-                            onClick={() => window.open('https://caboweddingplanner.love', '_blank')}
-                          >
-                            View detailed page →
-                          </Button>
-                          <Button 
-                            onClick={scrollToContact}
-                            className="bg-blue-600 hover:bg-blue-700 text-white text-sm"
-                          >
-                            Schedule a discovery call
-                          </Button>
-                        </div>
+                      
+                      <div className="mt-8 flex items-center gap-4 pt-6 border-t border-border/20">
+                        <Button 
+                          variant="outline" 
+                          className="text-sm"
+                          onClick={() => window.open('https://caboweddingplanner.love', '_blank')}
+                        >
+                          View detailed page →
+                        </Button>
+                        <Button 
+                          onClick={scrollToContact}
+                          className="bg-blue-600 hover:bg-blue-700 text-white text-sm"
+                        >
+                          Schedule a discovery call
+                        </Button>
                       </div>
-                    )}
+                    </div>
                   </div>
-                ))}
+                )}
+                
+                {expandedQuestion === -1 && (
+                  <div className="text-center py-16">
+                    <div className="w-16 h-16 rounded-full bg-purple-100 text-purple-600 mx-auto mb-4 flex items-center justify-center">
+                      <HelpCircle className="h-8 w-8" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">Select a Question</h3>
+                    <p className="text-muted-foreground">Choose a question from the Quick Index to see the detailed answer.</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
