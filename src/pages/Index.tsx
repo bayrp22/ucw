@@ -42,11 +42,10 @@ const Index = () => {
     { name: "Esperanza", image: "/esperanza logo.png" },
   ];
 
-  // Hero carousel data - Cache-busted version
+  // Hero carousel data - Cache-busted version (4 images)
   const heroImages = [
-    { image: "/hero-1.jpg?v=2", alt: "Cabo wedding ceremony" },
-    { image: "/hero-2.jpg?v=2", alt: "Cabo wedding reception" },
     { image: "/hero-3.jpg?v=2", alt: "Cabo wedding celebration" },
+    { image: "/hero-2.jpg?v=2", alt: "Cabo wedding reception" },
     { image: "/hero-4.jpg?v=2", alt: "Cabo wedding photography" },
     { image: "/hero-5.jpg?v=2", alt: "Cabo wedding moments" },
   ];
@@ -60,15 +59,15 @@ const Index = () => {
     return () => clearInterval(interval);
   }, []);
 
-  // OPTIMIZED: Progressive image loading for better performance
+  // OPTIMIZED: Progressive image loading for better performance (4 images)
   useEffect(() => {
     // CRITICAL: Load first image immediately and mark as loaded instantly for immediate display
     setHeroImagesLoaded(prev => new Set(prev).add(0)); // Mark as loaded immediately
     
     const firstImg = new Image();
-    firstImg.src = "/hero-1.jpg?v=2"; // Start loading in background
+    firstImg.src = "/hero-3.jpg?v=2"; // Start loading in background
 
-    // Progressive loading: Load next images after a delay (optimized for 5 images)
+    // Progressive loading: Load next images after a delay (optimized for 4 images)
     const loadProgressively = () => {
       setTimeout(() => {
         heroImages.slice(1, 3).forEach((hero, index) => {

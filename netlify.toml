@@ -62,8 +62,8 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Preload critical resources - Updated for hero image order fix
+# Preload critical resources - Updated for hero image order fix (4 images)
 [[headers]]
   for = "/"
   [headers.values]
-    Link = '</hero-1.jpg?v=2>; rel=preload; as=image; fetchpriority=high, </fonts/inter-var.woff2>; rel=preload; as=font; type=font/woff2; crossorigin' 
+    Link = '</hero-3.jpg?v=2>; rel=preload; as=image; fetchpriority=high, </fonts/inter-var.woff2>; rel=preload; as=font; type=font/woff2; crossorigin' 
